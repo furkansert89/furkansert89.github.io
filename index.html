@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Furkan Sert · Géomaticien</title>
+<meta name="description" content="Portfolio de Furkan Sert, étudiant en Master 1 Géomatique (G2M) à Paris 8 : SIG, cartographie, statistiques et analyse territoriale.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout : en-tête « carte » + grille de projets filtrable comme une légende + fiche projet en panneau */
+:root{
+  --paper:#eef0ee;
+  --surface:#ffffff;
+  --ink:#16201f;
+  --muted:#5b6765;
+  --line:#d3d8d6;
+  --accent:#1c5a8a;
+  --accent-ink:#ffffff;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  /* couleurs de légende par thème */
+  --c-sig:#1c5a8a; --c-stat:#7a4fa3; --c-carto:#2f8a5b; --c-diag:#c07a12; --c-urb:#b2453a; --c-terr:#2d7f86; --c-stage:#3c4a48;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body)}
+img{max-width:100%;display:block}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+@media (max-width:480px){.wrap{padding:0 16px}}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.05;text-wrap:balance;margin:0}
+.mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:1000;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.brand{font-family:var(--display);font-weight:800;font-stretch:112%;text-decoration:none;color:var(--ink);letter-spacing:.02em}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:500}
+.nav ul a:hover{color:var(--accent)}
+@media (max-width:640px){.nav ul{gap:14px}.nav ul li.hide-sm{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-bg{position:absolute;inset:0;background:url(img/hero.jpg) center/cover;opacity:.55}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 30%,color-mix(in srgb,var(--paper) 40%,transparent) 75%,transparent)}
+.hero .wrap{position:relative;padding-top:72px;padding-bottom:56px;display:grid;gap:22px}
+.hero .coords{color:var(--muted)}
+.hero h1{font-size:clamp(44px,8vw,96px);font-weight:800;letter-spacing:-.01em}
+.hero .role{font-size:clamp(18px,2.2vw,22px);max-width:none;color:var(--ink);text-wrap:balance}
+.hero .role .uni{display:block;white-space:nowrap}
+@media (max-width:560px){.hero .role .uni{white-space:normal}}
+.hero .role strong{color:var(--accent);font-weight:600}
+.status{display:inline-flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);padding:12px 16px;border-radius:6px;max-width:560px;font-size:14.5px}
+.status .dot{width:9px;height:9px;border-radius:50%;background:#2f9a5b;margin-top:7px;flex:none;box-shadow:0 0 0 4px color-mix(in srgb,#2f9a5b 22%,transparent)}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--accent);cursor:pointer;font-family:var(--body)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:hover{filter:brightness(1.08)}
+.scalebar{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.scalebar i{display:block;width:120px;height:6px;background:linear-gradient(90deg,var(--ink) 25%,transparent 25% 50%,var(--ink) 50% 75%,transparent 75%);border:1px solid var(--ink)}
+
+/* sections */
+section{padding:72px 0}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;margin-bottom:28px}
+.sec-head h2{font-size:clamp(30px,4vw,44px);font-weight:800}
+.sec-head>div{flex:1 1 100%;min-width:0}
+#cv .sec-head{flex-wrap:nowrap;align-items:center}
+#cv .sec-head>div{flex:1 1 auto}
+.cv-dl{flex:none;white-space:nowrap}
+@media (max-width:520px){#cv .sec-head{flex-wrap:wrap}}
+.sec-head p{margin:6px 0 0;color:var(--muted);max-width:none}
+
+/* filters as map legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;font:500 14px var(--body);cursor:pointer}
+.chip .sw{width:12px;height:12px;border-radius:3px;background:var(--c)}
+.chip .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.card{contain:layout paint;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 28px -14px rgba(0,0,0,.35);border-color:var(--c)}
+.card.featured{grid-column:span 2}
+@media (max-width:700px){.card.featured{grid-column:auto}}
+.thumb{aspect-ratio:4/3;background:#fff;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.card.featured .thumb{aspect-ratio:16/9}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:center}
+
+.thumb.ph{display:grid;place-items:center;background:
+  repeating-radial-gradient(circle at 30% 60%,transparent 0 18px,color-mix(in srgb,var(--c) 22%,transparent) 18px 19px),
+  color-mix(in srgb,var(--c) 7%,var(--surface))}
+.thumb.ph span{font-family:var(--display);font-stretch:112%;font-weight:800;font-size:22px;color:var(--c);text-align:center;padding:0 24px;line-height:1.15}
+.tag{position:absolute;top:12px;left:12px;background:var(--c);color:#fff;font:500 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-family:var(--body);font-stretch:100%;font-size:17px;font-weight:600;line-height:1.35}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);margin-top:auto}
+
+/* illustrations de catégorie */
+.thumb.ill{background:color-mix(in srgb,var(--c) 12%,var(--surface))}
+.thumb.ill svg{width:100%;height:100%;display:block;transition:transform .4s}
+.card:hover .thumb.ill svg{transform:scale(1.05) rotate(-1deg)}
+.ill .k{stroke:var(--ink);stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+.ill .a{fill:var(--c)}
+.ill .b{fill:color-mix(in srgb,var(--c) 40%,var(--surface))}
+.ill .w{fill:var(--surface)}
+.ill .n{fill:none}
+.sec-head h2 .yr{font-family:var(--body);font-stretch:100%;font-weight:400;color:var(--muted);font-size:.55em;white-space:nowrap}
+.meta .org{color:var(--ink);font-weight:500}
+/* langues */
+html[lang="fr"] [data-lang="en"],html[lang="en"] [data-lang="fr"]{display:none!important}
+.lang-switch{display:flex;align-items:center;gap:4px;margin-left:6px;padding-left:16px;border-left:1px solid var(--line);font-size:13px;color:var(--muted)}
+.lang-switch button{border:0;background:none;padding:4px 5px;border-radius:4px;font:600 13px var(--mono);color:var(--muted);cursor:pointer}
+.lang-switch button[aria-pressed="true"]{color:var(--ink);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.brand{white-space:nowrap}
+@media (max-width:480px){.nav ul{gap:10px}.nav ul a{font-size:14px}.lang-switch{padding-left:8px;margin-left:0}.brand{font-size:14px}}
+#cv,.contact{content-visibility:auto;contain-intrinsic-size:auto 1400px}
+.contact{contain-intrinsic-size:auto 520px}
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: none;
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: none;
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: none;
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+
+/* carte des projets */
+.pmap-wrap{position:relative;z-index:0;isolation:isolate;margin:4px 0 26px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#dbe7ee}
+#pmap{height:440px;background:#dbe7ee;font-family:var(--body)}
+@media (max-width:640px){#pmap{height:320px}}
+.pmap-ctl{position:absolute;top:12px;right:12px;z-index:500;display:flex;gap:4px;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:7px;padding:3px}
+.pmap-ctl button{border:0;background:none;padding:6px 10px;border-radius:5px;font:500 13px var(--body);color:var(--ink);cursor:pointer}
+.pmap-ctl button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.pmap-hint{position:absolute;left:14px;bottom:14px;z-index:500;display:flex;align-items:center;gap:8px;font:500 13px var(--body);color:var(--ink);background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.7);padding:6px 12px 6px 10px;border-radius:999px;box-shadow:0 4px 12px -6px rgba(0,0,0,.25);pointer-events:none}
+.pmap-hint::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:#d93a2b;box-shadow:0 0 0 0 rgba(217,58,43,.7);animation:hintPulse 1.8s ease-out infinite}
+@keyframes hintPulse{0%{box-shadow:0 0 0 0 rgba(217,58,43,.7)}70%{box-shadow:0 0 0 8px rgba(217,58,43,0)}100%{box-shadow:0 0 0 0 rgba(217,58,43,0)}}
+@media (max-width:640px){.pmap-hint{font-size:12px;left:10px;bottom:10px}}
+.leaflet-container{background:#dbe7ee;font:inherit}
+.leaflet-tooltip.ptip{background:var(--ink);color:#fff;border:0;border-radius:6px;padding:7px 10px;font:500 13px/1.35 var(--body);width:max-content;max-width:280px;white-space:normal;box-shadow:0 8px 20px -8px rgba(0,0,0,.5)}
+.leaflet-tooltip.ptip::before{border-top-color:var(--ink)}
+.ptip small{display:block;opacity:.7;font:400 11.5px var(--mono);margin-bottom:2px;letter-spacing:.04em;text-transform:uppercase}
+.leaflet-control-attribution{font-size:10px}
+/* projets phares */
+.meta .fstar{margin-left:auto;font-size:20px;line-height:1;color:#e0a526;font-family:var(--body);animation:starGlow 2.4s ease-in-out infinite}
+@keyframes starGlow{0%,100%{text-shadow:0 0 2px rgba(224,165,38,.35);transform:scale(1)}50%{text-shadow:0 0 10px rgba(224,165,38,.9),0 0 18px rgba(224,165,38,.45);transform:scale(1.12)}}
+.chip.chip-feat{border-color:#e6c27a;background:#fdf6e7;color:#8a5a12;font-weight:600}
+.chip.chip-feat .n{color:#b5741f}
+.chip.chip-feat[aria-pressed="true"]{background:#b5741f;border-color:#b5741f;color:#fff}
+.chip.chip-feat[aria-pressed="true"] .n{color:#fff}
+.sub-h{font-family:var(--body);font-stretch:100%;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:8px 0 14px}
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-bottom:44px}
+@media (max-width:860px){.feat{grid-template-columns:1fr}}
+.fcard{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit;transition:transform .18s,box-shadow .18s,border-color .18s;contain:layout paint}
+.fcard:hover{transform:translateY(-3px);box-shadow:0 12px 30px -16px rgba(0,0,0,.35);border-color:var(--c)}
+@media (max-width:520px){.fcard{grid-template-columns:1fr}}
+.fcard .fimg{position:relative;background:#fff;min-height:100%}
+.fcard .fimg img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.fcard .fbody{padding:18px 20px;display:flex;flex-direction:column;gap:10px;border-left:3px solid var(--c)}
+@media (max-width:520px){.fcard .fbody{border-left:0;border-top:3px solid var(--c)}}
+.fcard .fcat{font:500 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.fcard h4{margin:0;font-size:17px;font-weight:600;line-height:1.35}
+.fcard .fkey{display:flex;gap:10px;align-items:baseline;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.fcard .fkey b{font-family:var(--display);font-stretch:112%;font-size:26px;line-height:1;color:var(--c);white-space:nowrap}
+.fcard .fkey span{font-size:13.5px;color:var(--muted);line-height:1.35}
+.star{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:#b5741f;font:600 11px var(--mono);letter-spacing:.05em;padding:4px 7px;border-radius:4px}
+/* cv */
+.cv-sec{background:var(--surface);border-top:1px solid var(--line)}
+.cv{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:56px}
+@media (max-width:900px){.cv{grid-template-columns:1fr;gap:40px}}
+.cv-h{font-family:var(--body);font-stretch:100%;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cv-main .cv-h:not(:first-child){margin-top:20px}
+.cv-main .tl li::before{background:var(--surface)}
+.cv-side{display:grid;gap:30px;align-content:start;position:sticky;top:80px;align-self:start}
+@media (max-width:900px){.cv-side{position:static}}
+.cv-side .cv-h{margin-bottom:12px}
+.cv-sub{font-size:13px;color:var(--muted);margin:12px 0 7px}
+.cv-sub:first-of-type{margin-top:0}
+.cv-list{margin:0;padding-left:18px;display:grid;gap:5px;font-size:15px}
+.cv-list li::marker{color:var(--accent)}
+.pills.soft .pill{background:var(--paper);border-color:var(--line)}
+.cv-langs{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font-size:15px}
+.cv-langs dt{font-weight:600}
+.cv-langs dd{margin:0;color:var(--muted)}
+/* parcours */
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:48px}
+@media (max-width:860px){.two{grid-template-columns:1fr;gap:40px}}
+.two h3{font-size:22px;font-weight:700;margin-bottom:18px}
+.tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--line)}
+.tl li{position:relative;padding:0 0 26px 22px}
+.tl li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--accent)}
+.tl .when{color:var(--accent);font-weight:500}
+.tl h4{margin:2px 0 2px;font-size:16.5px;font-weight:600;line-height:1.35}
+.tl .where{color:var(--muted);font-size:14.5px}
+.tl ul{margin:8px 0 0;padding-left:18px;font-size:15px;max-width:62ch}
+.tl ul li{padding:0 0 4px;border:0}
+.tl ul li::before{display:none}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px}
+.box h3{font-family:var(--body);font-stretch:100%;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{padding:5px 11px;border-radius:5px;background:color-mix(in srgb,var(--accent) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);font-size:14px}
+.langs{display:grid;gap:12px}
+.lang{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:15px}
+.lang .bar{grid-column:1/-1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.lang .bar i{display:block;height:100%;background:var(--accent)}
+.lang small{color:var(--muted)}
+
+/* contact */
+.contact{background:var(--ink);color:var(--paper)}
+.contact .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+@media (max-width:760px){.contact .wrap{grid-template-columns:1fr}}
+.contact h2{font-size:clamp(32px,5vw,54px);font-weight:800}
+.contact .cta-line{margin-top:14px;color:var(--paper);font-weight:500}
+.contact p{color:color-mix(in srgb,var(--paper) 75%,transparent);max-width:48ch}
+.contact-list{display:grid;gap:12px}
+.phone-copy{width:100%;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 16px;border:1px solid color-mix(in srgb,var(--paper) 22%,transparent);border-radius:6px;background:transparent;color:var(--paper);font:inherit;text-align:left;cursor:pointer}
+.phone-copy:hover{border-color:var(--paper)}
+.pc-act{font-size:13px;opacity:.75;white-space:nowrap}
+.mailbox{position:relative;display:block!important;padding:0!important;border:0!important}
+.mail-toggle{width:100%;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 16px;border:1px solid color-mix(in srgb,var(--paper) 22%,transparent);border-radius:6px;background:transparent;color:var(--paper);font:inherit;text-align:left;cursor:pointer}
+.mail-toggle:hover,.mail-toggle[aria-expanded="true"]{border-color:var(--paper)}
+.mail-menu{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:5;display:grid!important;gap:0!important;padding:6px!important;background:var(--surface);border:1px solid var(--line)!important;border-radius:8px;box-shadow:0 14px 34px -12px rgba(0,0,0,.45)}
+.mail-menu[hidden]{display:none!important}
+.mail-menu a,.mail-menu button{display:block!important;padding:10px 12px!important;border:0!important;border-radius:5px;background:none;color:var(--ink)!important;font:500 14.5px var(--body);text-align:left;cursor:pointer;text-decoration:none}
+.mail-menu a:hover,.mail-menu button:hover{background:var(--paper)}
+.contact-list a,.contact-list div{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 16px;border:1px solid color-mix(in srgb,var(--paper) 22%,transparent);border-radius:6px;color:var(--paper);text-decoration:none}
+.contact-list a:hover{border-color:var(--paper)}
+.contact-list .k{font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.08em;opacity:.65}
+footer{padding:22px 0;background:var(--ink);color:color-mix(in srgb,var(--paper) 55%,transparent);border-top:1px solid color-mix(in srgb,var(--paper) 14%,transparent);font-size:13px}
+
+/* dialog */
+.sheet{padding:40px 48px 28px;overflow:auto;max-height:92vh;display:flex;flex-direction:column;gap:22px}
+@media (max-width:600px){.sheet{padding:32px 20px 20px}}
+.sheet .code{color:var(--c);font-weight:500}
+.sheet h2{font-size:clamp(24px,3vw,32px);font-weight:700;line-height:1.15;max-width:30ch;margin-top:-10px}
+.sheet section{display:grid;grid-template-columns:150px 1fr;gap:4px 28px;border-top:1px solid var(--line);padding:16px 0 0}
+@media (max-width:700px){.sheet section{grid-template-columns:1fr}}
+.sheet h3{font-family:var(--body);font-stretch:100%;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--c);padding-top:3px}
+.sheet p{margin:0;max-width:68ch}
+.sheet ul{margin:0;padding-left:18px;display:grid;gap:6px;max-width:68ch}
+.sheet li::marker{color:var(--c)}
+.sheet .pills .pill{background:color-mix(in srgb,var(--c) 10%,var(--surface));border-color:color-mix(in srgb,var(--c) 28%,transparent)}
+.descwrap{display:grid;gap:14px}
+.pb{border-left:3px solid var(--c);background:color-mix(in srgb,var(--c) 7%,var(--surface));padding:10px 14px;border-radius:0 6px 6px 0}
+.pb span{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--c);margin-bottom:4px}
+.pb p{font-style:italic;max-width:66ch}
+.sheet-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+dialog{border:0;padding:0;width:min(920px,94vw);max-height:92vh;border-radius:10px;background:var(--surface);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(10,16,15,.66)}
+.dlg{display:grid;grid-template-columns:1.25fr 1fr;max-height:92vh}
+@media (max-width:820px){.dlg{grid-template-columns:1fr;overflow:auto}}
+.dlg-img{background:#fff;display:grid;place-items:center;overflow:auto;border-right:1px solid var(--line);min-height:260px}
+.dlg-img img{max-height:92vh;width:100%;object-fit:contain}
+.dlg-img.ph{background:color-mix(in srgb,var(--c) 7%,var(--surface))}
+.dlg-txt{padding:28px 28px 24px;overflow:auto;display:flex;flex-direction:column;gap:16px}
+.dlg-txt .code{color:var(--c);font-weight:500}
+.dlg-txt h2{font-size:clamp(22px,2.6vw,28px);font-weight:700;line-height:1.15}
+.dlg-txt p{margin:0;max-width:62ch}
+.facts{display:grid;grid-template-columns:150px 1fr;gap:6px 28px;margin:0;font-size:14.5px;border-top:1px solid var(--line);padding-top:16px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0}
+.keyfig{display:flex;gap:18px;flex-wrap:wrap}
+.keyfig div{border-left:3px solid var(--c);padding-left:10px}
+.keyfig b{display:block;font-family:var(--display);font-stretch:112%;font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.keyfig span{font-size:13px;color:var(--muted)}
+.dlg-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:6px}
+.close{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:20px;cursor:pointer;z-index:2}
+.nav-arrows{display:flex;gap:8px}
+.nav-arrows button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:8px 12px;cursor:pointer;font:500 14px var(--body)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="brand" href="#top">FURKAN SERT</a>
+    <ul>
+      <li><a href="#projets">Portfolio</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="lang-switch" role="group" aria-label="Langue / Language"><button type="button" data-set="fr" aria-pressed="true">FR</button><span aria-hidden="true">/</span><button type="button" data-set="en" aria-pressed="false">EN</button></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap">
+        <h1>Furkan Sert</h1>
+    <p class="role" data-lang="fr">Étudiant en <strong>Master 1 Géomatique, géodécisionnel, géomarketing et multimédia (G2M)</strong> <span class="uni">à l’Université Paris&nbsp;8 Vincennes&nbsp;–&nbsp;Saint-Denis</span></p>
+    <p class="role" data-lang="en">Master’s student in <strong>Geomatics, Geodecision, Geomarketing and Multimedia (G2M)</strong> <span class="uni">at Université Paris&nbsp;8 Vincennes&nbsp;–&nbsp;Saint-Denis</span></p>
+    <div class="status"><span class="dot" aria-hidden="true"></span><span data-lang="fr"><b>Disponible pour une alternance en géomatique</b><br>À partir de septembre 2027, pour une durée d’un an, selon un rythme de 3 jours en entreprise et 2 jours en formation.</span><span data-lang="en"><b>Available for a work-study position (alternance) in geomatics</b><br>Starting in September 2027, for one year, on a schedule of 3 days in the company and 2 days at university.</span></div>
+    <div class="cta">
+      <a class="btn ghost" href="#contact" data-i18n="contactMe">Me contacter</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="projets">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>Portfolio</h2>
+        <p data-lang="fr">Une sélection de travaux réalisés au cours de mes études de géographie et de géomatique, ainsi que dans le cadre de mes stages, entre 2023 et 2026. Cliquez sur une fiche pour découvrir le projet et télécharger le dossier complet.</p><p data-lang="en">A selection of work carried out during my studies in geography and geomatics, as well as during my internships, between 2023 and 2026. Click on a card to explore the project and download the full report.</p>
+      </div>
+    </div>
+    <div class="pmap-wrap">
+      <div id="pmap" role="region" aria-label="Carte des projets"></div>
+      <div class="pmap-ctl" role="group" aria-label="Vue de la carte">
+        <button type="button" data-v="world" aria-pressed="true" data-i18n="vWorld">Monde</button>
+        <button type="button" data-v="europe" aria-pressed="false">Europe</button>
+        <button type="button" data-v="france" aria-pressed="false">France</button>
+        <button type="button" data-v="paris" aria-pressed="false">Paris</button>
+      </div>
+      <div class="pmap-hint" data-i18n="mapHint">Cliquez sur un point pour ouvrir le projet</div>
+    </div>
+    <div class="legend" id="legend" role="group" aria-label="Filtrer par thème"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="cv" class="cv-sec">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>CV</h2></div></div>
+    <div class="cv" data-lang="fr">
+      <div class="cv-main">
+        <h3 class="cv-h">Formation</h3>
+        <ol class="tl">
+          <li>
+            <div class="mono when">2026 → EN COURS</div>
+            <h4>Master 1 Géomatique, géodécisionnel, géomarketing et multimédia (G2M)</h4>
+            <div class="where">Université Paris 8 Vincennes – Saint-Denis</div>
+          </li>
+          <li>
+            <div class="mono when">2023 → 2026</div>
+            <h4>Licence Géographie et Aménagement, parcours ETS (Espace, Territoire et Société)</h4>
+            <div class="where">Université Paris 1 Panthéon-Sorbonne</div>
+          </li>
+          <li>
+            <div class="mono when">2018 → 2023</div>
+            <h4>Lycée Bilingue Francophone Saint-Joseph d’Istanbul</h4>
+            <div class="where">Label France Éducation · diplôme équivalent au baccalauréat français</div>
+            <ul><li>Mention très bien (89,77/100), prix d’excellence chaque année</li></ul>
+          </li>
+        </ol>
+
+        <h3 class="cv-h">Expériences professionnelles</h3>
+        <ol class="tl">
+          <li>
+            <div class="mono when">MAI 2026</div>
+            <h4>Stage de terrain en analyse des métropoles contemporaines</h4>
+            <div class="where">Université Paris 1 Panthéon-Sorbonne · Paris / Lille, France</div>
+            <ul>
+              <li>Stage de quatre jours sur le terrain, précédé d’une préparation méthodologique durant un semestre, encadré par deux enseignants (≈ 58h)</li>
+              <li>Analyse des dynamiques commerciales et territoriales des clusters de la Métropole Européenne de Lille</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">AOÛT 2025</div>
+            <h4>Stage en urbanisme · Cabinet d’aménagement et de planification urbaine</h4>
+            <div class="where">IMPO · Istanbul, Turquie</div>
+            <ul>
+              <li>Stage de deux semaines, 5 jours par semaine (90h)</li>
+              <li>Bureau de 20 personnes, missions à dominante opérationnelles, travaux à l’échelle nationale</li>
+              <li>Participation à un projet de renouvellement urbain à Tokat (ville anatolienne), préparation de rapports et de questionnaires de terrain</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">JUILLET 2025</div>
+            <h4>Stage en urbanisme · Municipalité d’Istanbul</h4>
+            <div class="where">Agence de planification d’Istanbul (IPA) · Istanbul, Turquie</div>
+            <ul>
+              <li>Stage de quatre semaines, 5 jours par semaine (180h)</li>
+              <li>Bureau de 50 personnes, collaboration avec des enseignants spécialistes du domaine, missions à dominante théoriques, travaux à l’échelle métropolitaine</li>
+              <li>Analyses des zones minières et côtières d’Istanbul pour la Vision 2050</li>
+              <li>Réalisation d’un dossier d’étude territoriale (28 pages) : Analyse spatiale et stratégies de planification des zones minières à Istanbul (1980-1995 / 2006-2025)</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">AOÛT 2024</div>
+            <h4>Stage · Section démographie d’un cabinet d’architecture</h4>
+            <div class="where">DOME + PARTNERS · Istanbul, Turquie</div>
+            <ul>
+              <li>Stage de quatre semaines, 5 jours par semaine (180h)</li>
+              <li>Bureau de 30-40 personnes, collaboration avec des architectes, travaux à l’échelle internationale (Moyen Orient)</li>
+              <li>Participation à un projet de renouvellement urbain à Erbil</li>
+              <li>Réalisation d’un dossier démographique (7 pages) : Caractéristiques démographiques de la zone d’étude - Erbil (Irak)</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <aside class="cv-side">
+        <div class="cv-block">
+          <h3 class="cv-h">Compétences numériques</h3>
+          <div class="cv-sub">Logiciels SIG</div>
+          <div class="pills"><span class="pill">QGIS</span><span class="pill">ArcGIS Pro</span><span class="pill">NetCAD</span><span class="pill">JOSM</span></div>
+          <div class="cv-sub">Outils cartographiques</div>
+          <div class="pills"><span class="pill">Inkscape</span><span class="pill">Magrit</span><span class="pill">Photoshop</span><span class="pill">Canva</span><span class="pill">Google Earth</span></div>
+          <div class="cv-sub">Programmation</div>
+          <div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">Shell</span><span class="pill">Julia</span><span class="pill">JupyterLab</span></div>
+          <div class="cv-sub">Bureautique</div>
+          <div class="pills"><span class="pill">Excel</span><span class="pill">Word</span><span class="pill">PowerPoint</span><span class="pill">Google Workspace</span></div>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Savoir-faire</h3>
+          <ul class="cv-list">
+            <li>Conduite d’entretiens et d’enquêtes</li>
+            <li>Analyse territoriale et modélisation spatiale</li>
+            <li>Traitement de données statistiques</li>
+            <li>Capacités rédactionnelles</li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Savoir-être</h3>
+          <ul class="cv-list">
+            <li>Esprit d’équipe</li>
+            <li>Curiosité intellectuelle</li>
+            <li>Adaptabilité</li>
+            <li>Autonomie</li>
+            <li>Rigueur</li>
+            <li>Sens de l’organisation</li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Langues</h3>
+          <dl class="cv-langs">
+            <dt>Français</dt><dd>Professionnel · DALF C1 (69,5/100)</dd>
+            <dt>Anglais</dt><dd>Professionnel · TOEFL 86/120 (C1-C2)</dd>
+            <dt>Turc</dt><dd>Langue maternelle</dd>
+          </dl>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Centres d’intérêt</h3>
+          <ul class="cv-list">
+            <li>Cinéma social et politique</li>
+            <li>Architecture néoclassique</li>
+            <li>Histoire de l’art moderne</li>
+            <li>Analyse tactique et technique du football</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+    <div class="cv" data-lang="en">
+      <div class="cv-main">
+        <h3 class="cv-h">Education</h3>
+        <ol class="tl">
+          <li>
+            <div class="mono when">2026 → PRESENT</div>
+            <h4>Master’s Year 1 in Geomatics, Geodecision, Geomarketing and Multimedia (G2M)</h4>
+            <div class="where">Université Paris 8 Vincennes – Saint-Denis</div>
+          </li>
+          <li>
+            <div class="mono when">2023 → 2026</div>
+            <h4>Bachelor’s degree in Geography and Planning, ETS track (Space, Territory and Society)</h4>
+            <div class="where">Université Paris 1 Panthéon-Sorbonne</div>
+          </li>
+          <li>
+            <div class="mono when">2018 → 2023</div>
+            <h4>Saint-Joseph French-Turkish Bilingual High School, Istanbul</h4>
+            <div class="where">France Éducation label · diploma equivalent to the French baccalauréat</div>
+            <ul><li>Highest honours (89.77/100), excellence award every year</li></ul>
+          </li>
+        </ol>
+
+        <h3 class="cv-h">Professional experience</h3>
+        <ol class="tl">
+          <li>
+            <div class="mono when">MAY 2026</div>
+            <h4>Field internship in contemporary metropolitan analysis</h4>
+            <div class="where">Université Paris 1 Panthéon-Sorbonne · Paris / Lille, France</div>
+            <ul>
+              <li>Four-day field internship, preceded by a semester of methodological preparation, supervised by two lecturers (≈ 58 h)</li>
+              <li>Analysis of the commercial and territorial dynamics of clusters in the Lille European Metropolis</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">AUGUST 2025</div>
+            <h4>Urban planning internship · Planning and urban design consultancy</h4>
+            <div class="where">IMPO · Istanbul, Turkey</div>
+            <ul>
+              <li>Two-week internship, 5 days a week (90 h)</li>
+              <li>20-person office, mainly operational assignments, national-scale projects</li>
+              <li>Contribution to an urban renewal project in Tokat (Anatolia): preparation of reports and field questionnaires</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">JULY 2025</div>
+            <h4>Urban planning internship · Istanbul Metropolitan Municipality</h4>
+            <div class="where">Istanbul Planning Agency (IPA) · Istanbul, Turkey</div>
+            <ul>
+              <li>Four-week internship, 5 days a week (180 h)</li>
+              <li>50-person office, collaboration with specialist academics, mainly theoretical assignments, metropolitan-scale projects</li>
+              <li>Analysis of Istanbul’s mining and coastal areas for Vision 2050</li>
+              <li>Territorial study report (28 pages): spatial analysis and planning strategies for mining areas in Istanbul (1980–1995 / 2006–2025)</li>
+            </ul>
+          </li>
+          <li>
+            <div class="mono when">AUGUST 2024</div>
+            <h4>Internship · Demography section of an architecture firm</h4>
+            <div class="where">DOME + PARTNERS · Istanbul, Turkey</div>
+            <ul>
+              <li>Four-week internship, 5 days a week (180 h)</li>
+              <li>30–40-person office, collaboration with architects, international projects (Middle East)</li>
+              <li>Contribution to an urban renewal project in Erbil</li>
+              <li>Demographic report (7 pages): demographic characteristics of the study area – Erbil (Iraq)</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
+      <aside class="cv-side">
+        <div class="cv-block">
+          <h3 class="cv-h">Digital skills</h3>
+          <div class="cv-sub">GIS software</div>
+          <div class="pills"><span class="pill">QGIS</span><span class="pill">ArcGIS Pro</span><span class="pill">NetCAD</span><span class="pill">JOSM</span></div>
+          <div class="cv-sub">Mapping tools</div>
+          <div class="pills"><span class="pill">Inkscape</span><span class="pill">Magrit</span><span class="pill">Photoshop</span><span class="pill">Canva</span><span class="pill">Google Earth</span></div>
+          <div class="cv-sub">Programming</div>
+          <div class="pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">Shell</span><span class="pill">Julia</span><span class="pill">JupyterLab</span></div>
+          <div class="cv-sub">Office software</div>
+          <div class="pills"><span class="pill">Excel</span><span class="pill">Word</span><span class="pill">PowerPoint</span><span class="pill">Google Workspace</span></div>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Know-how</h3>
+          <ul class="cv-list">
+            <li>Conducting interviews and surveys</li>
+            <li>Territorial analysis and spatial modelling</li>
+            <li>Statistical data processing</li>
+            <li>Writing skills</li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Soft skills</h3>
+          <ul class="cv-list">
+            <li>Team spirit</li>
+            <li>Intellectual curiosity</li>
+            <li>Adaptability</li>
+            <li>Autonomy</li>
+            <li>Rigour</li>
+            <li>Organisational skills</li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Languages</h3>
+          <dl class="cv-langs">
+            <dt>French</dt><dd>Professional · DALF C1 (69.5/100)</dd>
+            <dt>English</dt><dd>Professional · TOEFL 86/120 (C1–C2)</dd>
+            <dt>Turkish</dt><dd>Native language</dd>
+          </dl>
+        </div>
+        <div class="cv-block">
+          <h3 class="cv-h">Interests</h3>
+          <ul class="cv-list">
+            <li>Social and political cinema</li>
+            <li>Neoclassical architecture</li>
+            <li>History of modern art</li>
+            <li>Tactical and technical football analysis</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div data-lang="en">
+      <h2>Let’s work together</h2>
+      <p>I am looking for a one-year work-study position (alternance) in geomatics starting in September 2027, on a schedule of 3 days in the company and 2 days at university. I would be delighted to put my skills in GIS, cartography and geomarketing to work in support of territorial decision-making within your organisation.</p>
+      <p class="cta-line">Feel free to get in touch 👋</p>
+    </div>
+    <div data-lang="fr">
+      <h2>Travaillons ensemble</h2>
+      <p>Je suis à la recherche d’une alternance d’un an en géomatique à partir de septembre 2027, selon un rythme de 3 jours en entreprise et 2 jours en formation. Je serais ravi de mettre mes compétences en SIG, en cartographie et en géomarketing au service de l’aide à la décision territoriale au sein de votre structure.</p>
+      <p class="cta-line">N’hésitez pas à me contacter pour échanger 👋</p>
+    </div>
+    <div class="contact-list">
+      <div class="mailbox">
+        <button type="button" class="mail-toggle" id="mail-toggle" aria-expanded="false" aria-controls="mail-menu"><span><span class="k">E-mail</span><br>furkansert89@gmail.com</span><span aria-hidden="true">✉</span></button>
+        <div class="mail-menu" id="mail-menu" hidden>
+          <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=furkansert89@gmail.com" target="_blank" rel="noopener" data-i18n="gmail">Écrire avec Gmail ↗</a>
+          <a href="https://outlook.live.com/mail/0/deeplink/compose?to=furkansert89@gmail.com" target="_blank" rel="noopener" data-i18n="outlook">Écrire avec Outlook ↗</a>
+          <a href="mailto:furkansert89@gmail.com" target="_blank" rel="noopener" data-i18n="mailapp">Application de messagerie ↗</a>
+          <button type="button" id="mail-copy" data-i18n="copyMail">Copier l’adresse</button>
+        </div>
+      </div>
+      <a href="https://www.linkedin.com/in/furkan-sert-282246326" target="_blank" rel="noopener"><span><span class="k">LinkedIn</span><br>furkan-sert</span><span>↗</span></a>
+      <div class="mailbox">
+        <button type="button" class="mail-toggle" id="phone-toggle" aria-expanded="false" aria-controls="phone-menu"><span><span class="k" data-i18n="phone">Téléphone</span><br>07 44 75 99 22</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></button>
+        <div class="mail-menu" id="phone-menu" hidden>
+          <a href="tel:+33744759922" target="_blank" rel="noopener" data-i18n="call">Appeler ↗</a>
+          <button type="button" id="phone-copy" data-i18n="copyPhone">Copier le numéro</button>
+        </div>
+      </div>
+      <div><span><span class="k" data-i18n="location">Localisation</span><br>Paris, France</span></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer><div class="wrap"><span data-lang="fr">© 2026 Furkan Sert · Cartes et analyses réalisées dans le cadre universitaire et professionnel.</span><span data-lang="en">© 2026 Furkan Sert · Maps and analyses produced in academic and professional settings.</span></div></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <button class="close" id="dlg-close" aria-label="Fermer">×</button>
+  <article class="sheet">
+    <div class="mono code" id="dlg-code"></div>
+    <h2 id="dlg-title"></h2>
+    <section><h3 data-i18n="hDesc">Description</h3><div class="descwrap"><p id="dlg-desc"></p><div class="pb"><span data-i18n="hPb">Problématique</span><p id="dlg-pb"></p></div></div></section>
+    <section><h3 data-i18n="hObj">Objectifs</h3><ul id="dlg-obj"></ul></section>
+    <section><h3 data-i18n="hRes">Résultats</h3><ul id="dlg-res"></ul></section>
+    <section><h3 data-i18n="hTools">Outils et données</h3><div class="pills" id="dlg-tools"></div></section>
+    <dl class="facts" id="dlg-facts"></dl>
+    <div class="sheet-foot">
+      <div class="dlg-actions" id="dlg-actions"></div>
+      <div class="nav-arrows"><button id="prev" aria-label="Projet précédent">←</button><button id="next" aria-label="Projet suivant">→</button></div>
+    </div>
+  </article>
+</dialog>
+
+<script>
+const D="https://drive.google.com/file/d/";
+const DL="https://drive.google.com/uc?export=download&id=";
+const K='class="k',S=(x)=>`<svg viewBox="0 0 400 300" aria-hidden="true" class="ill">${x}</svg>`;
+const ILL={
+ sig:S(`<polygon points="90,205 200,160 310,205 200,250" class="a k"/>
+  <polygon points="90,165 200,120 310,165 200,210" class="b k"/>
+  <path d="M140 170 L185 150 L230 168 L190 188Z" class="w k"/>
+  <polygon points="90,125 200,80 310,125 200,170" class="w k"/>
+  <circle cx="150" cy="128" r="7" class="a"/><circle cx="245" cy="122" r="7" class="a"/><circle cx="215" cy="145" r="7" class="a"/>
+  <path d="M200 22c-17 0-30 13-30 30c0 22 30 48 30 48s30-26 30-48c0-17-13-30-30-30z" class="a k"/><circle cx="200" cy="52" r="10" class="w k"/>`),
+ stat:S(`<path d="M70 50V240H345" class="n k"/>
+  <rect x="95" y="170" width="38" height="70" class="b k"/><rect x="148" y="130" width="38" height="110" class="a k"/>
+  <rect x="201" y="182" width="38" height="58" class="b k"/><rect x="254" y="100" width="38" height="140" class="a k"/>
+  <path d="M114 150L167 110L220 132L273 72" class="n k"/>
+  <circle cx="114" cy="150" r="8" class="w k"/><circle cx="167" cy="110" r="8" class="w k"/><circle cx="220" cy="132" r="8" class="w k"/><circle cx="273" cy="72" r="8" class="w k"/>
+  <circle cx="330" cy="70" r="28" class="w k"/><path d="M330 70V42A28 28 0 0 1 356 80Z" class="a k"/>`),
+ carto:S(`<polygon points="70,70 160,90 160,240 70,220" class="w k"/><polygon points="160,90 250,70 250,220 160,240" class="b k"/><polygon points="250,70 340,90 340,240 250,220" class="w k"/>
+  <ellipse cx="298" cy="190" rx="24" ry="14" class="b k"/>
+  <path d="M95 205C130 150 180 195 205 145S275 120 305 112" class="n" stroke="var(--c)" stroke-width="6" stroke-dasharray="11 9" stroke-linecap="round"/>
+  <path d="M297 104l16 16M313 104l-16 16" class="k"/>
+  <polygon points="112,92 121,120 112,148 103,120" class="w k"/><polygon points="112,92 121,120 103,120" class="a"/>`),
+ diag:S(`<path d="M30 240H370" class="n k"/>
+  <rect x="58" y="165" width="64" height="75" class="w k"/><polygon points="48,168 90,128 132,168" class="a k"/><rect x="80" y="200" width="20" height="40" class="b k"/>
+  <rect x="150" y="200" width="10" height="40" class="b k"/><circle cx="155" cy="180" r="26" class="b k"/>
+  <rect x="210" y="62" width="135" height="178" rx="10" class="b k"/><rect x="226" y="86" width="103" height="140" class="w k"/><rect x="252" y="50" width="52" height="24" rx="6" class="a k"/>
+  <rect x="240" y="104" width="18" height="18" class="w k"/><path d="M243 113l5 5l9-11" class="n" stroke="var(--c)" stroke-width="4" stroke-linecap="round"/><path d="M270 113H312" class="k"/>
+  <rect x="240" y="142" width="18" height="18" class="w k"/><path d="M243 151l5 5l9-11" class="n" stroke="var(--c)" stroke-width="4" stroke-linecap="round"/><path d="M270 151H312" class="k"/>
+  <rect x="240" y="180" width="18" height="18" class="w k"/><path d="M270 189H300" class="k"/>`),
+ urb:S(`<circle cx="80" cy="72" r="22" class="b k"/>
+  <rect x="55" y="140" width="50" height="100" class="b k"/><rect x="110" y="90" width="60" height="150" class="a k"/><rect x="175" y="160" width="45" height="80" class="w k"/>
+  <rect x="225" y="110" width="55" height="130" class="b k"/><rect x="285" y="150" width="50" height="90" class="w k"/>
+  <g class="w"><rect x="122" y="105" width="12" height="14"/><rect x="146" y="105" width="12" height="14"/><rect x="122" y="135" width="12" height="14"/><rect x="146" y="135" width="12" height="14"/><rect x="122" y="165" width="12" height="14"/><rect x="146" y="165" width="12" height="14"/></g>
+  <g class="a"><rect x="187" y="175" width="10" height="12"/><rect x="203" y="175" width="10" height="12"/><rect x="297" y="165" width="10" height="12"/><rect x="315" y="165" width="10" height="12"/></g>
+  <path d="M320 150V40M262 44H366M278 44V82" class="n k"/><rect x="268" y="82" width="20" height="16" class="a k"/>
+  <path d="M30 240H370" class="n k"/>`),
+ terr:S(`<circle cx="330" cy="70" r="20" class="w k"/>
+  <polygon points="30,240 140,95 250,240" class="a k"/><polygon points="140,95 120,122 140,116 160,124" class="w k"/>
+  <polygon points="170,240 268,125 370,240" class="b k"/>
+  <path d="M232 190Q268 168 305 190M215 214Q268 188 325 214" class="n k" stroke-dasharray="8 8"/>
+  <rect x="20" y="240" width="360" height="40" class="w k"/>
+  <path d="M30 262C110 246 200 282 370 256" class="n" stroke="var(--c)" stroke-width="10" stroke-linecap="round"/>`),
+ stage:S(`<path d="M165 110V88a10 10 0 0 1 10-10h50a10 10 0 0 1 10 10v22" class="n k" stroke-width="6"/>
+  <rect x="100" y="110" width="200" height="130" rx="14" class="a k"/><path d="M100 162H300" class="k"/>
+  <rect x="185" y="150" width="30" height="24" rx="4" class="w k"/>
+  <path d="M305 40c-15 0-26 11-26 26c0 19 26 42 26 42s26-23 26-42c0-15-11-26-26-26z" class="b k"/><circle cx="305" cy="66" r="8" class="w k"/>`)
+};
+
+const CATS={
+  sig:{label:"SIG",en:"GIS",c:"--c-sig"}, stat:{label:"Statistiques",en:"Statistics",c:"--c-stat"}, carto:{label:"Cartographie",en:"Cartography",c:"--c-carto"},
+  diag:{label:"Diagnostic territorial",en:"Territorial diagnosis",c:"--c-diag"}, urb:{label:"Études urbaines",en:"Urban studies",c:"--c-urb"},
+  terr:{label:"Analyse territoriale",en:"Territorial analysis",c:"--c-terr"}, stage:{label:"Stages",en:"Internships",c:"--c-stage"}
+};
+const I18N={en:{contactMe:"Contact me",cvdl:"Download CV (PDF, in French) ↓",gmail:"Write with Gmail ↗",outlook:"Write with Outlook ↗",mailapp:"Mail app ↗",call:"Call ↗",
+  copyMail:"Copy address",copyPhone:"Copy number",phone:"Phone",location:"Location",hDesc:"Description",hPb:"Research question",hObj:"Objectives",hRes:"Results",hTools:"Tools and data",
+  all:"All",featChip:"Featured projects",featH:"Featured projects",allH:"All projects",feat:"Featured",vWorld:"World",mapHint:"Click a point to open the project",course:"Course",where:"Institution",year:"Year",copiedMail:"Address copied ✓",copiedPhone:"Number copied ✓"},
+  fr:{all:"Tous",feat:"Phare",featChip:"Projets phares",course:"Cours",where:"Établissement",year:"Année",copiedMail:"Adresse copiée ✓",copiedPhone:"Numéro copié ✓"}};
+let LANG="fr";
+try{const q=localStorage.getItem("lang");if(q==="en"||q==="fr")LANG=q}catch(_){}
+const t=k=>(I18N[LANG]&&I18N[LANG][k])||I18N.fr[k]||k;
+const cl=k=>LANG==="en"?CATS[k].en:CATS[k].label;
+const P1="Université Paris 1 Panthéon-Sorbonne";
+const P=[
+ {id:"sig-01",cat:"sig",d:"2026-11",yr:"2026",title:"Bâtiments sensibles de la Métropole d’Orléans exposés aux crues de la Loire : hiérarchisation des priorités de protection",
+  desc:"Ce travail de groupe, mené avec Anys Bekhti et Corentin Gomes, porte sur le périmètre du PPRi du Val d’Orléans, le long de la Loire. Il s’intéresse aux bâtiments qui assurent des services essentiels (écoles, établissements de santé, EHPAD, sites industriels classés) et dont l’inondation compromettrait le fonctionnement du territoire. L’enjeu n’est donc pas seulement de mesurer l’aléa, mais d’en évaluer les conséquences sur ces équipements afin d’orienter les priorités de protection.",pb:"Quels sont les bâtiments sensibles de la Métropole d’Orléans exposés aux crues de la Loire, et comment hiérarchiser leur degré d’importance et de protection afin d’assurer la continuité des services essentiels ?",
+  obj:["Identifier les bâtiments sensibles situés en zone inondable et la classe de hauteur d’eau à laquelle ils sont exposés (0-1 m à 3-4 m).","Hiérarchiser leur priorité de protection grâce à un indicateur composite : Score = 0,4 × Aléa + 0,3 × Sensibilité + 0,3 × Capacité.","Repérer les secteurs qui concentrent le plus d’enjeux et traduire les résultats en décisions."],
+  res:["1 286 bâtiments sensibles analysés, dont 137 exposés aux crues (10,7 %).","70 bâtiments jugés critiques (priorité très forte ou forte).","Un secteur particulièrement exposé en bord de Loire, détaillé dans un carton à grande échelle.","Préconisations : étendre le réseau de capteurs de niveau d’eau vers les bâtiments prioritaires, plans de continuité d’activité, appui à la révision du PPRi."],
+  tools:["QGIS","BD TOPO (IGN)","TRI Orléans 2020 · Géorisques","FINESS","RAMSESE","ICPE","Jointures spatiales","Score multicritère"],
+  course:"Pratique de l’analyse spatiale et SIG",where:"Université Paris 8 Vincennes – Saint-Denis",year:"Master 1 · Semestre 1 · 2026",links:[["Télécharger le dossier (PDF)","docs/SERT_Inondations_Orleans_2026.pdf"]]},
+
+ {id:"stage-01",cat:"stage",d:"2026-05",yr:"2026",title:"Dynamiques commerciales et territoriales des clusters de la Métropole Européenne de Lille",
+  desc:"Ce stage de terrain, réalisé en groupe de cinq après un semestre de préparation méthodologique, s’inscrit dans le module « Analyser les métropoles contemporaines ». Il porte sur deux clusters de la Métropole Européenne de Lille, EuraTechnologies et Eurasanté, et sur leur environnement commercial. Deux lectures s’opposent dans la littérature : l’une rattache l’offre commerciale à la spécialisation du cluster (Fabry), l’autre au profil de ses usagers (Florida). Le travail cherche à les confronter sur le terrain.",pb:"L’offre commerciale autour d’un cluster est-elle le reflet de sa spécialisation sectorielle, ou davantage le produit du profil de ses actifs et de sa population résidente ?",
+  obj:["Comparer deux clusters, EuraTechnologies (numérique, urbain dense) et Eurasanté (santé, périurbain), à deux zones témoins : Wazemmes et Haubourdin.","Délimiter chaque zone par une isochrone de 15 minutes à pied depuis son barycentre.","Croiser relevé commercial, observations stationnaires, entretiens avec les commerçants et les actifs, et indicateurs statistiques."],
+  res:["Wazemmes présente l’offre la plus diversifiée (indice de Shannon 6,24), Eurasanté la plus faible (5,39).","À EuraTechnologies et Haubourdin, l’offre reste très faible au regard de la demande résidentielle.","Les clusters se vident le soir et le week-end : les commerçants dépendent entièrement du flux des actifs, fragilisé par le télétravail.","Conclusion : c’est le profil des actifs qui structure l’offre, mais seulement lorsqu’ils résident sur place."],
+  tools:["Base Sirene","RGP · INSEE","Isochrones","Indice de Shannon","Discrétisation Q6","Entretiens","Observation stationnaire"],
+  course:"Stage de terrain · Analyser les métropoles contemporaines",where:P1,year:"Licence 3 · Semestre 6 · 2026",links:[["Télécharger le dossier (PDF)","docs/SERT_Clusters_Lille_2026.pdf"]]},
+
+ {id:"stat-01",cat:"stat",d:"2026-04",yr:"2026",title:"Transition démographique et épidémiologique face à la distribution mondiale des MPOC",
+  desc:"Réalisé avec Raphaël Rousseau, ce dossier porte sur les maladies pulmonaires obstructives chroniques (MPOC), quatrième cause de décès dans le monde. Leur prévalence varie fortement d’un pays à l’autre, selon le niveau de développement, l’exposition aux polluants ou la capacité de diagnostic. À partir des données du Global Burden of Disease, de l’OMS et de la Banque mondiale (1990 et 2023), l’étude cherche à distinguer ce qui relève des facteurs de risque de ce qui relève du stade de transition des pays.",pb:"La transition démographique et épidémiologique des pays conditionne-t-elle la distribution mondiale des MPOC, au-delà des facteurs de risque environnementaux ou comportementaux ?",
+  obj:["Décrire la géographie de la mortalité, de l’incidence et des années vécues avec incapacité (analyse univariée).","Mesurer la relation entre l’incidence et ses facteurs explicatifs, puis lire les résidus (analyse bivariée).","Dégager les grandes structures géographiques par une analyse en composantes principales."],
+  res:["Foyers en Asie du Sud et en Europe ; niveaux faibles en Afrique subsaharienne, liés à des populations jeunes et au sous-diagnostic.","Le tabagisme n’explique presque pas l’incidence à l’échelle nationale, contrairement à la mortalité infantile (42,7 % de la variance) et au cancer du poumon (63 %).","ACP : trois axes retenus (74 % de l’inertie) et quatre profils de pays.","La transition démographique et épidémiologique apparaît comme le principal déterminant de la géographie des MPOC."],
+  tools:["Statistiques univariées et bivariées","Régression linéaire","ACP","Cartographie thématique","GBD · IHME","OMS","Banque mondiale"],
+  course:"Statistique multivariée et cartographie",where:P1,year:"Licence 3 · Semestre 6 · 2026",links:[["Télécharger le dossier (PDF)","docs/SERT_MPOC_Statistiques_2026.pdf"]]},
+
+ {id:"sig-02",cat:"sig",d:"2025-11",yr:"2025",title:"Inégalités d’accès aux soins de santé et vulnérabilités socio-spatiales en Tasmanie",
+  desc:"Réalisé avec Raphaël Rousseau sous forme de poster, ce travail porte sur le Nord-Est de la Tasmanie, un territoire de faible densité marqué par l’insularité et l’importance des espaces naturels. L’accès aux soins peut y être limité aussi bien par l’éloignement des équipements que par la fragilité socio-économique des habitants. L’analyse, conduite à l’échelle des Statistical Areas 1 (environ 400 habitants), vise à mesurer le poids respectif de ces deux facteurs.",pb:"Dans quelle mesure l’inégalité d’accès aux soins au Nord-Est de la Tasmanie est-elle davantage dictée par la distance que par les disparités socio-économiques ?",
+  obj:["Construire un indicateur de vulnérabilité socio-économique : âge, dépendance, faibles revenus et absence de véhicule.","Construire un indicateur d’accessibilité spatiale aux soins : distance aux équipements, densité et diversité de l’offre.","Croiser les deux indicateurs pour établir une typologie et identifier les zones prioritaires."],
+  res:["66 % de la zone d’étude se trouve à plus de 40 minutes d’un hôpital et concentre 42 % de la population.","Un net gradient urbain-rural : l’accessibilité se dégrade à mesure que l’on s’éloigne de Launceston.","Aucune corrélation claire entre vulnérabilité et accessibilité : la distance est le facteur déterminant.","Typologie en cinq profils, d’optimal à vulnérable. J’ai réalisé la cartographie et le design du poster."],
+  tools:["QGIS","ABS · recensement 2021","OpenStreetMap","Indicateurs composites","Normalisation et pondération","Typologie"],
+  course:"SIG",where:P1,year:"Licence 3 · Semestre 5 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Tasmanie_Acces_aux_soins_2025.pdf"]]},
+
+ {id:"urb-01",cat:"urb",d:"2025-11",yr:"2025",title:"Artificialisation des sols en Dordogne et mise en œuvre du ZAN",
+  desc:"Ce dossier collectif, réalisé avec Raphaël Rousseau, Clémence Dudit et Dounia Mokhtari, porte sur la Dordogne : un département rural de 503 communes, peu dense (46 hab./km²) et boisé à 45 %, qui connaît pourtant une artificialisation soutenue. Depuis la loi Climat et Résilience, l’objectif de Zéro Artificialisation Nette impose une trajectoire de sobriété foncière qui doit se décliner à toutes les échelles de la planification. L’étude examine la capacité de ces documents à infléchir les dynamiques observées.",pb:"Dans quelle mesure la coordination entre SRADDET, SCoT et PLUi permet-elle de maîtriser l’artificialisation des sols en Dordogne ?",
+  obj:["Analyser les dynamiques d’artificialisation au regard des dynamiques démographiques et des profils de communes.","Étudier l’intégration des objectifs du Zéro Artificialisation Nette dans les documents d’urbanisme, du SRADDET aux PLUi.","Confronter la réglementation aux actions et aux retours des acteurs locaux."],
+  res:["L’habitat individuel dispersé est le principal moteur de l’artificialisation.","Seules 13 % des communes sont « vertueuses », comme Trélissac ou Montpon-Ménestérol (+6 % d’habitants pour +1,2 % d’artificialisation).","Poids des résidences secondaires dans le Périgord Noir : 62,3 % des logements à Saint-Cyprien.","Coût de l’étalement pour les communes : 36 km de voirie à entretenir à Augignac pour 800 habitants. Pistes d’ajustement du ZAN."],
+  tools:["Corine Land Cover","INSEE","Photo-interprétation (carte d’État-major / 2018)","SRADDET · SCoT · PLUi","Entretiens avec des élus","Cartographie"],
+  course:"Études urbaines",where:P1,year:"Licence 3 · Semestre 5 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Artificialisation_Dordogne_2025.pdf"]]},
+
+ {id:"stage-02",cat:"stage",d:"2025-07",yr:"2025",title:"Zones minières d’Istanbul : analyse spatiale et stratégies de planification (1980-1995 / 2006-2025)",
+  desc:"Ce stage de quatre semaines (180 h) s’est déroulé à l’Agence de planification d’Istanbul (IPA), au sein d’un bureau de 50 personnes et en collaboration avec des enseignants spécialistes. Les missions, à dominante théorique et à l’échelle métropolitaine, s’inscrivaient dans les travaux de la Vision 2050 sur les zones minières et côtières. Les zones minières y constituent un enjeu à la fois environnemental, réglementaire et de planification.",pb:"",
+  obj:["Analyser la répartition spatiale des zones minières d’Istanbul.","Comparer les processus de planification de 1980-1995 et de 2006-2025.","Évaluer ces espaces sous les angles cartographique, réglementaire et environnemental, à plusieurs échelles."],
+  res:["Un dossier d’étude territoriale de 28 pages, rédigé en turc puis traduit en français.","Une lecture comparée des stratégies de planification sur deux périodes.","Une contribution aux analyses des zones minières et côtières pour la Vision 2050."],
+  tools:["Analyse cartographique","Documents de planification","Analyse réglementaire","Approche multiscalaire"],
+  course:"Stage en urbanisme",where:"IPA · Agence de planification d’Istanbul",year:"Juillet 2025 · 4 semaines",links:[["Télécharger le dossier en français (PDF)","docs/SERT_IPA_Zones_minieres_Istanbul_FR_2025.pdf"],["Télécharger en turc (PDF)","docs/SERT_IPA_Zones_minieres_Istanbul_TR_2025.pdf"]]},
+
+ {id:"sig-03",cat:"sig",d:"2025-04",yr:"2025",title:"Atlas du Pays de Chantonnay : infrastructures sportives et transports",
+  desc:"Réalisé avec Raphaël Rousseau dans le cadre du module de SIG de L2, cet atlas thématique porte sur la Communauté de communes du Pays de Chantonnais, en Vendée. À l’échelle d’une intercommunalité rurale de dix communes, la répartition des équipements sportifs et leur desserte conditionnent directement l’accès des habitants à ces services.",pb:"",
+  obj:["Inventorier et cartographier les équipements sportifs du territoire.","Représenter les réseaux de transport qui les desservent.","Analyser l’organisation spatiale et l’accessibilité des équipements à l’échelle intercommunale."],
+  res:["Un atlas de dix planches cartographiques homogènes.","Une lecture de l’organisation des équipements entre la ville-centre de Chantonnay et les communes rurales."],
+  tools:["QGIS","BD TOPO 3.3 (IGN, 2023)","Mise en page d’atlas","Sémiologie graphique"],
+  course:"SIG",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Atlas_Pays_de_Chantonnay_2025.pdf"]]},
+
+ {id:"sig-04",cat:"sig",d:"2025-04",yr:"2025",title:"Infrastructures éducatives et accessibilité à l’éducation : CA La Roche-sur-Yon Agglomération",
+  desc:"Ce travail individuel porte sur l’offre éducative de La Roche-sur-Yon Agglomération, en Vendée. Il adopte une démarche multiscalaire, du site universitaire de la Courtaisière à la commune, puis à l’agglomération et à ses intercommunalités voisines, afin de comprendre comment la localisation des établissements organise l’accès à l’éducation sur le territoire.",pb:"Comment les infrastructures éducatives influencent-elles l’accessibilité à l’éducation sur CA La Roche-sur-Yon Agglomération ?",
+  obj:["Caractériser le site de la Courtaisière (Nantes Université, lycée Jean de Lattre de Tassigny) et son environnement urbain.","Mesurer la concentration des fonctions éducatives dans la commune de La Roche-sur-Yon.","Situer l’organisation éducative à l’échelle intercommunale et de ses voisines."],
+  res:["Un pôle universitaire excentré mais desservi par un réseau routier structurant.","Des fonctions éducatives concentrées au centre de La Roche-sur-Yon.","Une offre primaire diffuse dans l’agglomération, mais peu d’espaces de travail autonome hors du centre.","Une organisation intercommunale centrée sur la ville-préfecture et connectée par un réseau multimodal."],
+  tools:["QGIS","Données IGN (2025)","Analyse multiscalaire","Cartographie thématique"],
+  course:"SIG",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Education_La_Roche-sur-Yon_2025.pdf"]]},
+
+ {id:"carto-01",cat:"carto",d:"2025-04",yr:"2025",title:"Construire et peupler les États-Unis (XVIIIe – XXIe siècles)",
+  desc:"Ce travail cartographique individuel retrace la construction territoriale des États-Unis, des Treize colonies à l’armature urbaine actuelle. Il associe une carte de synthèse consacrée à l’expansion du territoire et aux foyers de peuplement à trois cartes de figurés proportionnels représentant les grandes villes en 1900, 1950 et 2020.",pb:"",
+  obj:["Représenter l’extension progressive du territoire et ses modalités : traités, conflits armés, annexions.","Montrer les foyers de colonisation européenne et les dynamiques de peuplement anglo-saxon et hispanique.","Comparer la hiérarchie urbaine en 1900, 1950 et 2020."],
+  res:["Une carte de synthèse en trois parties : expansion, modalités d’acquisition, puissances coloniales rivales.","Trois cartes des grandes villes en figurés proportionnels, qui montrent la montée des métropoles du Sud et de l’Ouest."],
+  tools:["Cartographie thématique","Figurés proportionnels","Sémiologie graphique","U.S. Census Bureau (2020)","Atlas de l’Empire américain"],
+  course:"Cartographie",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Etats-Unis_Cartographie_2025.pdf"]]},
+
+ {id:"carto-02",cat:"carto",d:"2025-04",yr:"2025",title:"Localiser Netflix en Inde : une plateforme globale face aux réalités territoriales",
+  desc:"Ce croquis commenté porte sur l’implantation de Netflix en Inde. Il s’appuie principalement sur l’article de Christine Ithurbide consacré à la stratégie de localisation de la plateforme, complété par les travaux d’Olivier Thuillas et Louis Wiart sur la « glocalisation » et par ceux de Dominique Moïsi sur la géopolitique des séries. L’Inde y apparaît comme un marché immense, mais inégalement équipé et culturellement très divers.",pb:"",
+  obj:["Représenter un marché numérique indien en pleine expansion.","Montrer les contraintes territoriales et les stratégies d’expansion locale.","Traduire l’adaptation de la plateforme à la diversité linguistique et culturelle (glocalisation)."],
+  res:["Un croquis en trois parties : abonnés par État en 2023, États très connectés et hubs technologiques (Maharashtra, Karnataka), régions peu connectées (Bihar, Jharkhand).","Mise en évidence de la censure autour de Delhi et des partenariats locaux (Jio, Airtel).","Représentation des contenus en hindi, marathi, tamoul, télougou et bengali, et de l’hybridation culturelle."],
+  tools:["GeoPandas","Natural Earth","Croquis géographique","Commentaire de carte"],
+  course:"Aires économiques et culturelles",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Netflix_Inde_2025.pdf"]]},
+
+ {id:"diag-01",cat:"diag",d:"2025-04",yr:"2025",title:"Concilier habitat urbain et biodiversité : l’exemple des écoquartiers",
+  desc:"Réalisé avec Raphaël Rousseau à partir d’enquêtes de terrain menées pendant le semestre, ce dossier porte sur l’intégration de la biodiversité dans l’habitat urbain. Il compare deux écoquartiers, Clichy-Batignolles (17e) et la Maladrerie à Aubervilliers, à un quartier dense du centre de Paris, celui des Arches Citoyennes près de l’Hôtel de Ville. Ce rapprochement entre nature et ville, qui peut paraître antinomique, s’opère de manière très variable selon les lieux.",pb:"Dans quelle mesure peut-on concilier l’habitat urbain et les pratiques urbaines avec l’insertion et la préservation de la biodiversité ?",
+  obj:["Analyser comment les écoquartiers organisent l’habitat autour des biotopes.","Évaluer les services écosystémiques rendus et l’insertion dans les trames verte, bleue, blanche, noire et brune.","Identifier les limites de l’intégration de la biodiversité dans l’espace urbain dense."],
+  res:["Clichy-Batignolles : parc Martin-Luther-King de 10 ha, environ 500 espèces végétales et 1 200 espèces animales, 88 % de sols perméables.","La Maladrerie : 4 ha d’espaces végétalisés au sol et 27 000 m² de terrasses-jardins.","Arches Citoyennes : hyperdensité et contraintes patrimoniales qui limitent toute végétalisation.","Des limites communes : végétalisation privée inégale, coûts élevés et risque de « greenwashing urbanistique »."],
+  tools:["Enquêtes de terrain","Entretiens","Relevés de biotopes","Cartographie thématique","Photographie"],
+  course:"Diagnostic territorial",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Ecoquartiers_Biodiversite_2025.pdf"]]},
+
+ {id:"terr-01",cat:"terr",d:"2025-04",yr:"2025",title:"Les Hautes Terres malgaches : un espace privilégié dans un territoire à risque",
+  desc:"Réalisé avec Raphaël Rousseau et Victor Talbot sous forme de poster, ce travail porte sur les Hautes Terres du centre de Madagascar. Situées entre 800 et 1 500 m d’altitude, elles offrent des conditions favorables à l’agriculture dans une île très exposée aux aléas naturels, tout en concentrant une part croissante de la population.",pb:"",
+  obj:["Caractériser les atouts climatiques et agricoles des Hautes Terres.","Identifier les risques naturels propres à la région et les effets du changement climatique.","Analyser les pressions foncières qui pèsent sur l’agriculture."],
+  res:["Entre 800 et 1 500 m d’altitude, un climat subtropical humide (16-19 °C) qui permet une riziculture pluviale sans irrigation.","Une région moins exposée aux cyclones, inondations et sécheresses, mais vulnérable aux glissements de terrain.","Des pluies moins régulières et plus concentrées qui aggravent la saison sèche.","Morcellement des parcelles par héritage et extension urbaine dans une région qui concentre 45 % de la population de l’île."],
+  tools:["Poster scientifique","Cartographie","Banque mondiale · GFDRR","INSTAT","ThinkHazard","FAO"],
+  course:"Territoires, environnements et inégalités",where:P1,year:"Licence 2 · Semestre 4 · 2025",links:[["Télécharger le dossier (PDF)","docs/SERT_Hautes_Terres_malgaches_2025.pdf"]]},
+
+ {id:"stat-02",cat:"stat",d:"2024-11",yr:"2024",title:"Relation entre emplois et entreprises dans les départements de France métropolitaine",
+  desc:"Réalisé avec Raphaël Rousseau, ce devoir porte sur deux variables centrales des dynamiques économiques territoriales : le nombre d’établissements employeurs et le nombre d’emplois par département. Leur analyse conjointe permet de caractériser l’attractivité économique des départements métropolitains et de mettre en lumière leurs disparités.",pb:"Dans quelle mesure le nombre d’entreprises influence-t-il le nombre d’emplois par département en France métropolitaine ?",
+  obj:["Décrire la distribution de chacune des deux variables et repérer les cas particuliers.","Mesurer la relation entre elles (covariance, coefficient de Pearson).","Construire un modèle de régression linéaire et interpréter ses résidus."],
+  res:["Une relation très forte : r = 0,98 et R² = 0,95, le nombre d’établissements employeurs explique 95 % de la variation de l’emploi.","Des extrêmes nets : Paris (181 486 établissements, 2,16 millions d’emplois) et la Lozère.","Des résidus marqués pour les Hauts-de-Seine (+60 %), le Territoire de Belfort (+32 %) et la Corse (–35 %), expliqués par les navettes et la taille des entreprises."],
+  tools:["Excel","Statistiques descriptives","Corrélation","Régression linéaire","INSEE"],
+  course:"Statistiques",where:P1,year:"Licence 2 · Semestre 3 · 2024",links:[["Télécharger le dossier (PDF)","docs/SERT_Emplois_Entreprises_2024.pdf"]]},
+
+ {id:"diag-02",cat:"diag",d:"2024-11",yr:"2024",title:"Concentration, rassemblement et dispersion du personnel des restaurants asiatiques du 13e",
+  desc:"Cette enquête de terrain, menée en groupe avec Raphaël Rousseau, Anderson Pires et Hugo Escude, porte sur le cœur du 13e arrondissement, entre la place d’Italie, l’avenue de Choisy, la rue Bobillot et les boulevards Masséna et Kellermann. Ce secteur concentre de nombreux restaurants asiatiques, héritage de l’installation de communautés venues d’Asie du Sud-Est après 1975. L’étude s’intéresse au personnel de ces restaurants et à ses mobilités domicile-travail, lues à travers trois dynamiques spatiales : la concentration, le rassemblement et la dispersion.",pb:"Existe-t-il une relation entre le lieu de travail du personnel des restaurants asiatiques de notre zone d’étude et ses lieux de résidence, se traduisant par des dynamiques de concentration, de rassemblement et de dispersion ?",
+  obj:["Recenser par entretiens les restaurants, leur type de gestion et les lieux de résidence de leur personnel.","Construire une base de données spatialisée des mobilités domicile-travail.","Analyser les dynamiques de concentration, de rassemblement et de dispersion."],
+  res:["83 % des restaurants sont concentrés sur l’avenue de Choisy et la rue de Tolbiac.","67 % sont des restaurants familiaux : un rassemblement fondé sur les réseaux familiaux, hérité de l’installation des communautés après 1975.","Le personnel réside surtout dans le 13e (56 %), à Vitry-sur-Seine (25 %) et à Ivry-sur-Seine (19 %).","Près d’un quart de « dispersés » (Franconville, Créteil, Nanterre…), en raison du prix du logement et du recrutement des chaînes."],
+  tools:["Protocole d’enquête","Entretiens","Base de données","Carte de flux"],
+  course:"Diagnostic territorial",where:P1,year:"Licence 2 · Semestre 3 · 2024",links:[["Télécharger le dossier (PDF)","docs/SERT_Restaurants_asiatiques_Paris13_2024.pdf"]]},
+
+ {id:"stage-03",cat:"stage",d:"2024-08",yr:"2024",title:"Caractéristiques démographiques de la zone d’étude : Erbil (Irak)",
+  desc:"Ce stage de quatre semaines (180 h) s’est déroulé au sein de la section démographie du cabinet d’architecture DOME + PARTNERS, aux côtés d’architectes, dans le cadre d’un projet de renouvellement urbain à Erbil. Capitale de la Région du Kurdistan irakien, la ville connaît une forte croissance démographique portée par le développement économique, les migrations internes et le contexte géopolitique. Le rapport la compare à Souleymaniye, l’autre grande ville de la région.",pb:"",
+  obj:["Caractériser la mosaïque ethnique, religieuse et linguistique d’Erbil.","Comparer la situation économique d’Erbil à celle de Souleymaniye et de la Région du Kurdistan.","Analyser l’activité économique, le niveau d’éducation et la structure par âge en Irak et à Erbil."],
+  res:["Un dossier démographique de 7 pages, rédigé en anglais.","Une aire métropolitaine de 918 000 habitants : 65 % de Kurdes, 15 % de Turkmènes, 10 % d’Arabes.","215 215 déplacés internes à Erbil contre 92 290 à Souleymaniye, et 61 692 retours.","Une population très jeune, signe d’une fécondité élevée."],
+  tools:["Traitement de données statistiques","Graphiques","Analyse comparative multiscalaire","Excel"],
+  course:"Stage · section démographie",where:"DOME + PARTNERS, Istanbul",year:"Août 2024 · 4 semaines",links:[["Télécharger le dossier en anglais (PDF)","docs/SERT_DOME_Erbil_Demographie_EN_2024.pdf"]]},
+
+ {id:"stat-03",cat:"stat",d:"2024-04",yr:"2024",title:"Les États de l’UE et la Norvège face aux besoins de santé de leur population",
+  desc:"Cette carte de synthèse individuelle confronte deux indicateurs de 2021 : les dépenses de santé, exprimées en part du PIB, et la part de la population déclarant un mauvais état de santé. Elle couvre les États de l’Union européenne et la Norvège, de l’Europe centrale aux côtes atlantiques et méditerranéennes.",pb:"",
+  obj:["Discrétiser chacun des deux indicateurs en six classes (Q6).","Croiser les deux indicateurs par une typologie fondée sur la méthode des rangs.","Produire une carte de synthèse lisible des inégalités sanitaires en Europe."],
+  res:["Une typologie qui distingue les pays où la santé est une priorité, les situations intermédiaires et les pays où elle ne l’est pas.","Mise en évidence de cas atypiques : fortes dépenses mais mauvais état de santé perçu, ou l’inverse."],
+  tools:["Eurostat","Discrétisation Q6","Méthode des rangs","Cartographie de synthèse"],
+  course:"Cartographie et statistiques",where:P1,year:"Licence 1 · Semestre 2 · 2024",links:[["Télécharger le dossier (PDF)","docs/SERT_Sante_UE_Norvege_2024.pdf"]]},
+
+ {id:"urb-02",cat:"urb",d:"2024-04",yr:"2024",title:"Mâcon : une commune culturelle avec un problème de continuité en son centre",
+  desc:"Ce dossier communal individuel porte sur Mâcon, ville-centre d’une unité urbaine de 16 communes en Saône-et-Loire. Ancienne ville industrielle réputée pour sa viticulture, elle voit sa population vieillir tandis qu’une partie des jeunes actifs part vers les grandes métropoles, ce qui fragilise le renouvellement de sa population.",pb:"Dans quelle mesure la commune de Mâcon est-elle confrontée à un problème de continuité ?",
+  obj:["Analyser l’évolution démographique de 1968 à 2020 (soldes naturel et migratoire, structure par âge).","Étudier la société mâconnaise : CSP, navettes domicile-travail, chômage, pauvreté, précarité.","Situer Mâcon dans son environnement urbain et rural, avec un croquis de morphologie urbaine."],
+  res:["Un pic à 39 000 habitants en 1975, puis un déclin jusqu’en 2014 et une légère reprise.","Une surreprésentation des ouvriers (plus de 25 %) et des retraités (22 %).","Un chômage de 16,9 %, contre 12,3 % en France métropolitaine ; 70 % des emplois occupés par des non-résidents.","Des départs d’actifs vers Lyon : le tourisme et la viticulture apparaissent comme des leviers de court terme."],
+  tools:["INSEE","Géoportail","Excel","Cartes de flux","Croquis de morphologie urbaine"],
+  course:"Sociétés et activités locales",where:P1,year:"Licence 1 · Semestre 2 · 2024",links:[["Télécharger le dossier (PDF)","docs/SERT_Dossier_communal_Macon_2024.pdf"]]},
+
+ {id:"urb-03",cat:"urb",d:"2023-11",yr:"2023",title:"Fontainebleau : attractivité territoriale et préservation du patrimoine",
+  desc:"Ce dossier porte sur l’attractivité de Fontainebleau, une commune dont l’identité repose sur un patrimoine exceptionnel : son château, inscrit au patrimoine mondial, et sa forêt domaniale. Cette richesse attire visiteurs et habitants, mais elle impose aussi des exigences de préservation.",pb:"",
+  obj:["Lire le paysage à partir d’observations de terrain.","Analyser les dynamiques territoriales liées au patrimoine.","Représenter le paysage par la photo-interprétation et le croquis."],
+  res:["Un diagnostic de l’attractivité de la commune fondé sur son patrimoine.","Une série de croquis paysagers et d’analyses photo-interprétées."],
+  tools:["Observation de terrain","Photo-interprétation","Croquis paysager"],
+  course:"Paysages et territoires",where:P1,year:"Licence 1 · Semestre 1 · 2023",links:[["Télécharger le dossier (PDF)","docs/SERT_Fontainebleau_Patrimoine_2023.pdf"]]}
+];
+
+P.sort((a,b)=>b.d.localeCompare(a.d));
+const EN={"sig-01": {"title": "Sensitive buildings in the Orléans Metropolitan Area exposed to Loire floods: prioritising protection", "desc": "This group project, carried out with Anys Bekhti and Corentin Gomes, covers the area of the Val d’Orléans flood risk prevention plan (PPRi) along the Loire. It focuses on buildings that provide essential services (schools, healthcare facilities, nursing homes, classified industrial sites) whose flooding would disrupt the functioning of the territory. The aim is therefore not only to measure the hazard, but to assess its consequences for these facilities in order to guide protection priorities.", "pb": "Which sensitive buildings in the Orléans Metropolitan Area are exposed to Loire floods, and how can their importance and level of protection be ranked to ensure the continuity of essential services?", "obj": ["Identify sensitive buildings located in flood-prone areas and the water-depth class to which they are exposed (0–1 m to 3–4 m).", "Rank their protection priority using a composite indicator: Score = 0.4 × Hazard + 0.3 × Sensitivity + 0.3 × Capacity.", "Locate the sectors with the highest concentration of issues and translate the results into decisions."], "res": ["1,286 sensitive buildings analysed, 137 of which are exposed to flooding (10.7%).", "70 buildings rated critical (very high or high priority).", "A particularly exposed sector along the Loire, detailed in a large-scale inset map.", "Recommendations: extend the water-level sensor network towards priority buildings, business continuity plans, support for the revision of the PPRi."], "tools": ["QGIS", "BD TOPO (IGN)", "TRI Orléans 2020 · Géorisques", "FINESS", "RAMSESE", "ICPE", "Spatial joins", "Multi-criteria score"], "course": "Spatial analysis and GIS practice", "where": "Université Paris 8 Vincennes – Saint-Denis", "year": "Master’s Year 1 · Semester 1 · 2026"}, "stage-01": {"title": "Commercial and territorial dynamics of clusters in the Lille European Metropolis", "desc": "This field internship, carried out in a group of five after a semester of methodological preparation, is part of the module “Analysing contemporary metropolises”. It focuses on two clusters in the Lille European Metropolis, EuraTechnologies and Eurasanté, and their commercial environment. Two readings compete in the literature: one links the retail offer to the cluster’s specialisation (Fabry), the other to the profile of its users (Florida). The project tests them in the field.", "pb": "Does the retail offer around a cluster reflect its sectoral specialisation, or is it rather the product of the profile of its workers and its resident population?", "obj": ["Compare two clusters, EuraTechnologies (digital, dense urban area) and Eurasanté (health, peri-urban), with two control areas: Wazemmes and Haubourdin.", "Delimit each area with a 15-minute walking isochrone from its centroid.", "Combine a retail survey, stationary observations, interviews with shopkeepers and workers, and statistical indicators."], "res": ["Wazemmes has the most diverse retail offer (Shannon index 6.24), Eurasanté the least (5.39).", "In EuraTechnologies and Haubourdin, the offer remains very limited compared with residential demand.", "The clusters empty out in the evening and at weekends: shopkeepers depend entirely on the flow of workers, weakened by remote working.", "Conclusion: the profile of workers shapes the retail offer, but only when they live on site."], "tools": ["Sirene database", "Census · INSEE", "Isochrones", "Shannon index", "Q6 classification", "Interviews", "Stationary observation"], "course": "Field internship · Analysing contemporary metropolises", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 3 · Semester 6 · 2026"}, "stat-01": {"title": "Demographic and epidemiological transition and the global distribution of COPD", "desc": "Carried out with Raphaël Rousseau, this report focuses on chronic obstructive pulmonary diseases (COPD), the fourth leading cause of death worldwide. Their prevalence varies widely between countries, depending on the level of development, exposure to pollutants and diagnostic capacity. Using data from the Global Burden of Disease, the WHO and the World Bank (1990 and 2023), the study seeks to distinguish what stems from risk factors from what stems from countries’ stage of transition.", "pb": "Does countries’ demographic and epidemiological transition shape the global distribution of COPD, beyond environmental or behavioural risk factors?", "obj": ["Describe the geography of mortality, incidence and years lived with disability (univariate analysis).", "Measure the relationship between incidence and its explanatory factors, then interpret the residuals (bivariate analysis).", "Identify the main geographical structures through a principal component analysis."], "res": ["Hotspots in South Asia and Europe; low levels in sub-Saharan Africa, linked to young populations and under-diagnosis.", "Smoking barely explains incidence at national level, unlike infant mortality (42.7% of variance) and lung cancer (63%).", "PCA: three axes retained (74% of inertia) and four country profiles.", "The demographic and epidemiological transition emerges as the main driver of the geography of COPD."], "tools": ["Univariate and bivariate statistics", "Linear regression", "PCA", "Thematic mapping", "GBD · IHME", "WHO", "World Bank"], "course": "Multivariate statistics and cartography", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 3 · Semester 6 · 2026"}, "sig-02": {"title": "Inequalities in access to healthcare and socio-spatial vulnerability in Tasmania", "desc": "Produced with Raphaël Rousseau as a poster, this project focuses on north-east Tasmania, a low-density area shaped by insularity and the importance of natural spaces. Access to healthcare there can be limited both by the distance to facilities and by the socio-economic fragility of residents. The analysis, conducted at the level of Statistical Areas 1 (around 400 inhabitants each), aims to measure the respective weight of these two factors.", "pb": "To what extent are inequalities in access to healthcare in north-east Tasmania driven more by distance than by socio-economic disparities?", "obj": ["Build a socio-economic vulnerability indicator: age, dependency, low income and lack of a vehicle.", "Build a spatial accessibility indicator: distance to facilities, density and diversity of the healthcare offer.", "Cross the two indicators to build a typology and identify priority areas."], "res": ["66% of the study area lies more than 40 minutes from a hospital and is home to 42% of the population.", "A clear urban–rural gradient: accessibility declines with distance from Launceston.", "No clear correlation between vulnerability and accessibility: distance is the decisive factor.", "A five-profile typology, from optimal to vulnerable. I produced the maps and the poster design."], "tools": ["QGIS", "ABS · 2021 Census", "OpenStreetMap", "Composite indicators", "Normalisation and weighting", "Typology"], "course": "GIS", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 3 · Semester 5 · 2025"}, "urb-01": {"title": "Land take in the Dordogne and the implementation of the ZAN objective", "desc": "This collective report, carried out with Raphaël Rousseau, Clémence Dudit and Dounia Mokhtari, focuses on the Dordogne: a rural department of 503 municipalities, sparsely populated (46 inhabitants/km²) and 45% forested, which nonetheless experiences sustained land take. Since the Climate and Resilience Act, the Zero Net Land Take (ZAN) objective requires a path towards land sobriety at every level of planning. The study examines the ability of these planning documents to change observed trends.", "pb": "To what extent does coordination between the SRADDET, SCoT and PLUi make it possible to control land take in the Dordogne?", "obj": ["Analyse land-take dynamics in relation to demographic trends and municipal profiles.", "Study how the ZAN objectives are integrated into planning documents, from the SRADDET to the PLUi.", "Compare the regulations with the actions and feedback of local stakeholders."], "res": ["Scattered detached housing is the main driver of land take.", "Only 13% of municipalities are “virtuous”, such as Trélissac or Montpon-Ménestérol (+6% population for +1.2% land take).", "The weight of second homes in the Périgord Noir: 62.3% of dwellings in Saint-Cyprien.", "The cost of sprawl for municipalities: 36 km of roads to maintain in Augignac for 800 inhabitants. Proposals to adjust the ZAN."], "tools": ["Corine Land Cover", "INSEE", "Photo-interpretation (État-major map / 2018)", "SRADDET · SCoT · PLUi", "Interviews with elected officials", "Mapping"], "course": "Urban studies", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 3 · Semester 5 · 2025"}, "stage-02": {"title": "Mining areas in Istanbul: spatial analysis and planning strategies (1980–1995 / 2006–2025)", "desc": "This four-week internship (180 hours) took place at the Istanbul Planning Agency (IPA), in a 50-person office and in collaboration with specialist academics. The assignments, mainly theoretical and at metropolitan scale, were part of the Vision 2050 work on mining and coastal areas. In Istanbul, mining areas raise environmental, regulatory and planning issues alike.", "pb": "", "obj": ["Analyse the spatial distribution of mining areas in Istanbul.", "Compare the planning processes of 1980–1995 and 2006–2025.", "Assess these areas from cartographic, regulatory and environmental perspectives, at several scales."], "res": ["A 28-page territorial study, written in Turkish and then translated into French.", "A comparative reading of planning strategies over two periods.", "A contribution to the analysis of mining and coastal areas for Vision 2050."], "tools": ["Cartographic analysis", "Planning documents", "Regulatory analysis", "Multi-scale approach"], "course": "Urban planning internship", "where": "IPA · Istanbul Planning Agency", "year": "July 2025 · 4 weeks"}, "sig-03": {"title": "Atlas of the Pays de Chantonnay: sports facilities and transport", "desc": "Produced with Raphaël Rousseau as part of the second-year GIS module, this thematic atlas covers the Pays de Chantonnais community of municipalities in the Vendée. At the scale of a rural grouping of ten municipalities, the distribution of sports facilities and their transport links directly determine residents’ access to these services.", "pb": "", "obj": ["Inventory and map the area’s sports facilities.", "Map the transport networks that serve them.", "Analyse the spatial organisation and accessibility of facilities at inter-municipal level."], "res": ["An atlas of ten consistent map plates.", "An overview of how facilities are distributed between the main town of Chantonnay and the rural municipalities."], "tools": ["QGIS", "BD TOPO 3.3 (IGN, 2023)", "Atlas layout", "Graphic semiology"], "course": "GIS", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "sig-04": {"title": "Educational infrastructure and access to education: La Roche-sur-Yon Agglomération", "desc": "This individual project focuses on the educational offer of La Roche-sur-Yon Agglomération, in the Vendée. It takes a multi-scale approach, from the Courtaisière university site to the municipality, then to the urban area and its neighbouring groupings, in order to understand how the location of institutions shapes access to education.", "pb": "How do educational infrastructures influence access to education in La Roche-sur-Yon Agglomération?", "obj": ["Characterise the Courtaisière site (Nantes Université, Jean de Lattre de Tassigny high school) and its urban setting.", "Measure the concentration of educational functions in the municipality of La Roche-sur-Yon.", "Place the educational organisation in its inter-municipal context and among its neighbours."], "res": ["An off-centre university hub, nevertheless served by a structuring road network.", "Educational functions concentrated in the centre of La Roche-sur-Yon.", "A dispersed primary-school offer across the urban area, but few independent study spaces outside the centre.", "An inter-municipal organisation centred on the prefecture town and connected by a multimodal network."], "tools": ["QGIS", "IGN data (2025)", "Multi-scale analysis", "Thematic mapping"], "course": "GIS", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "carto-01": {"title": "Building and populating the United States (18th–21st centuries)", "desc": "This individual cartographic project traces the territorial construction of the United States, from the Thirteen Colonies to today’s urban hierarchy. It combines a synthesis map of territorial expansion and settlement hubs with three proportional-symbol maps of the largest cities in 1900, 1950 and 2020.", "pb": "", "obj": ["Represent the gradual expansion of the territory and how it was acquired: treaties, armed conflicts, annexations.", "Show the hubs of European colonisation and the dynamics of Anglo-Saxon and Hispanic settlement.", "Compare the urban hierarchy in 1900, 1950 and 2020."], "res": ["A three-part synthesis map: expansion, modes of acquisition, rival colonial powers.", "Three proportional-symbol maps of the largest cities, showing the rise of metropolitan areas in the South and West."], "tools": ["Thematic mapping", "Proportional symbols", "Graphic semiology", "U.S. Census Bureau (2020)", "Atlas de l’Empire américain"], "course": "Cartography", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "carto-02": {"title": "Localising Netflix in India: a global platform facing territorial realities", "desc": "This annotated sketch map examines Netflix’s establishment in India. It draws mainly on Christine Ithurbide’s article on the platform’s localisation strategy, complemented by Olivier Thuillas and Louis Wiart’s work on “glocalisation” and Dominique Moïsi’s work on the geopolitics of TV series. India appears as a vast market, but one that is unevenly equipped and culturally very diverse.", "pb": "", "obj": ["Represent a rapidly expanding Indian digital market.", "Show territorial constraints and local expansion strategies.", "Convey the platform’s adaptation to linguistic and cultural diversity (glocalisation)."], "res": ["A three-part sketch map: subscribers by state in 2023, highly connected states and tech hubs (Maharashtra, Karnataka), poorly connected regions (Bihar, Jharkhand).", "Highlighting censorship around Delhi and local partnerships (Jio, Airtel).", "Representation of content in Hindi, Marathi, Tamil, Telugu and Bengali, and of cultural hybridisation."], "tools": ["GeoPandas", "Natural Earth", "Geographic sketch map", "Map commentary"], "course": "Economic and cultural areas", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "diag-01": {"title": "Reconciling urban housing and biodiversity: the example of eco-districts", "desc": "Carried out with Raphaël Rousseau on the basis of fieldwork conducted during the semester, this report examines how biodiversity is integrated into urban housing. It compares two eco-districts, Clichy-Batignolles (17th arrondissement) and La Maladrerie in Aubervilliers, with a dense neighbourhood in central Paris, around the Arches Citoyennes near the Hôtel de Ville. This coming together of nature and city, which may seem contradictory, takes very different forms from one place to another.", "pb": "To what extent can urban housing and urban practices be reconciled with the integration and preservation of biodiversity?", "obj": ["Analyse how eco-districts organise housing around biotopes.", "Assess the ecosystem services provided and the integration into green, blue, white, dark and brown ecological networks.", "Identify the limits of integrating biodiversity into dense urban space."], "res": ["Clichy-Batignolles: the 10-hectare Martin-Luther-King park, around 500 plant species and 1,200 animal species, 88% permeable soils.", "La Maladrerie: 4 hectares of planted ground and 27,000 m² of terrace gardens.", "Arches Citoyennes: hyper-density and heritage constraints that limit any greening.", "Shared limits: uneven private greening, high costs and a risk of “urban greenwashing”."], "tools": ["Fieldwork", "Interviews", "Biotope surveys", "Thematic mapping", "Photography"], "course": "Territorial diagnosis", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "terr-01": {"title": "The Malagasy Highlands: a privileged area within a territory at risk", "desc": "Produced with Raphaël Rousseau and Victor Talbot as a poster, this project focuses on the Highlands of central Madagascar. Lying between 800 and 1,500 m above sea level, they offer favourable conditions for agriculture on an island highly exposed to natural hazards, while concentrating a growing share of the population.", "pb": "", "obj": ["Characterise the climatic and agricultural assets of the Highlands.", "Identify the region’s specific natural risks and the effects of climate change.", "Analyse the land pressures weighing on agriculture."], "res": ["Between 800 and 1,500 m, a humid subtropical climate (16–19 °C) that allows rain-fed rice growing without irrigation.", "A region less exposed to cyclones, floods and droughts, but vulnerable to landslides.", "Less regular, more concentrated rainfall that worsens the dry season.", "Fragmentation of plots through inheritance and urban expansion in a region home to 45% of the island’s population."], "tools": ["Scientific poster", "Mapping", "World Bank · GFDRR", "INSTAT", "ThinkHazard", "FAO"], "course": "Territories, environments and inequalities", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 4 · 2025"}, "stat-02": {"title": "The relationship between jobs and businesses across the departments of metropolitan France", "desc": "Carried out with Raphaël Rousseau, this assignment examines two key variables of territorial economic dynamics: the number of employing establishments and the number of jobs per department. Analysing them together makes it possible to characterise the economic attractiveness of metropolitan departments and to highlight their disparities.", "pb": "To what extent does the number of businesses influence the number of jobs per department in metropolitan France?", "obj": ["Describe the distribution of each variable and identify special cases.", "Measure the relationship between them (covariance, Pearson coefficient).", "Build a linear regression model and interpret its residuals."], "res": ["A very strong relationship: r = 0.98 and R² = 0.95; the number of employing establishments explains 95% of the variation in employment.", "Clear extremes: Paris (181,486 establishments, 2.16 million jobs) and the Lozère.", "Marked residuals for the Hauts-de-Seine (+60%), the Territoire de Belfort (+32%) and Corsica (–35%), explained by commuting and company size."], "tools": ["Excel", "Descriptive statistics", "Correlation", "Linear regression", "INSEE"], "course": "Statistics", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 3 · 2024"}, "diag-02": {"title": "Concentration, clustering and dispersion of staff in Asian restaurants in the 13th arrondissement", "desc": "This group fieldwork, carried out with Raphaël Rousseau, Anderson Pires and Hugo Escude, focuses on the heart of the 13th arrondissement, between Place d’Italie, Avenue de Choisy, Rue Bobillot and the Masséna and Kellermann boulevards. The area concentrates many Asian restaurants, a legacy of the communities from South-East Asia who settled there after 1975. The study looks at the staff of these restaurants and their home–work mobility, read through three spatial dynamics: concentration, clustering and dispersion.", "pb": "Is there a relationship between the workplace of staff in Asian restaurants in our study area and their places of residence, reflected in dynamics of concentration, clustering and dispersion?", "obj": ["Survey, through interviews, the restaurants, their type of management and the places of residence of their staff.", "Build a spatial database of home–work mobility.", "Analyse the dynamics of concentration, clustering and dispersion."], "res": ["83% of restaurants are concentrated on Avenue de Choisy and Rue de Tolbiac.", "67% are family-run: clustering based on family networks, inherited from the settlement of communities after 1975.", "Staff mainly live in the 13th arrondissement (56%), Vitry-sur-Seine (25%) and Ivry-sur-Seine (19%).", "Nearly a quarter are “dispersed” (Franconville, Créteil, Nanterre…), due to housing costs and chain-restaurant recruitment."], "tools": ["Survey protocol", "Interviews", "Database", "Flow map"], "course": "Territorial diagnosis", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 2 · Semester 3 · 2024"}, "stage-03": {"title": "Demographic characteristics of the study area: Erbil (Iraq)", "desc": "This four-week internship (180 hours) took place in the demography section of the architecture firm DOME + PARTNERS, alongside architects, as part of an urban renewal project in Erbil. As the capital of the Kurdistan Region of Iraq, the city is experiencing strong population growth driven by economic development, internal migration and the geopolitical context. The report compares it with Sulaymaniyah, the region’s other major city.", "pb": "", "obj": ["Characterise Erbil’s ethnic, religious and linguistic mosaic.", "Compare Erbil’s economic situation with that of Sulaymaniyah and the Kurdistan Region.", "Analyse economic activity, education levels and age structure in Iraq and in Erbil."], "res": ["A 7-page demographic report, written in English.", "A metropolitan area of 918,000 inhabitants: 65% Kurds, 15% Turkmens, 10% Arabs.", "215,215 internally displaced persons in Erbil compared with 92,290 in Sulaymaniyah, and 61,692 returns.", "A very young population, reflecting high fertility."], "tools": ["Statistical data processing", "Charts", "Multi-scale comparative analysis", "Excel"], "course": "Internship · Demography section", "where": "DOME + PARTNERS, Istanbul", "year": "August 2024 · 4 weeks"}, "stat-03": {"title": "EU Member States and Norway facing the health needs of their populations", "desc": "This individual synthesis map compares two 2021 indicators: health expenditure as a share of GDP, and the share of the population reporting poor health. It covers the Member States of the European Union and Norway, from Central Europe to the Atlantic and Mediterranean coasts.", "pb": "", "obj": ["Classify each of the two indicators into six classes (Q6).", "Cross the two indicators through a rank-based typology.", "Produce a clear synthesis map of health inequalities in Europe."], "res": ["A typology distinguishing countries where health is a priority, intermediate situations and countries where it is not.", "Highlighting atypical cases: high spending but poor perceived health, or the reverse."], "tools": ["Eurostat", "Q6 classification", "Rank method", "Synthesis mapping"], "course": "Cartography and statistics", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 1 · Semester 2 · 2024"}, "urb-02": {"title": "Mâcon: a cultural town with a continuity problem at its centre", "desc": "This individual municipal report focuses on Mâcon, the main town of an urban unit of 16 municipalities in Saône-et-Loire. A former industrial town known for its wine-growing, it is seeing its population age while some young workers leave for large metropolitan areas, weakening the renewal of its population.", "pb": "To what extent is the municipality of Mâcon facing a continuity problem?", "obj": ["Analyse population change from 1968 to 2020 (natural and migration balances, age structure).", "Study Mâcon’s society: socio-professional categories, commuting, unemployment, poverty, job insecurity.", "Place Mâcon within its urban and rural surroundings, with a sketch of its urban morphology."], "res": ["A peak of 39,000 inhabitants in 1975, followed by decline until 2014 and a slight recovery.", "An over-representation of manual workers (over 25%) and retirees (22%).", "Unemployment of 16.9% compared with 12.3% in metropolitan France; 70% of jobs held by non-residents.", "Young workers leaving for Lyon: tourism and wine-growing appear as short-term levers."], "tools": ["INSEE", "Géoportail", "Excel", "Flow maps", "Urban morphology sketch"], "course": "Societies and local activities", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 1 · Semester 2 · 2024"}, "urb-03": {"title": "Fontainebleau: territorial attractiveness and heritage preservation", "desc": "This report examines the attractiveness of Fontainebleau, a town whose identity rests on exceptional heritage: its château, a World Heritage Site, and its state forest. This wealth attracts visitors and residents, but it also brings preservation requirements.", "pb": "", "obj": ["Read the landscape through field observation.", "Analyse the territorial dynamics linked to heritage.", "Represent the landscape through photo-interpretation and sketching."], "res": ["An assessment of the town’s attractiveness based on its heritage.", "A series of landscape sketches and photo-interpreted analyses."], "tools": ["Field observation", "Photo-interpretation", "Landscape sketching"], "course": "Landscapes and territories", "where": "Université Paris 1 Panthéon-Sorbonne", "year": "Bachelor’s Year 1 · Semester 1 · 2023"}};
+P.forEach(p=>{if(EN[p.id])p.en=EN[p.id]});
+const F=(p,k)=>LANG==="en"&&p.en&&p.en[k]!==undefined?p.en[k]:p[k];
+const LINK_EN={"Télécharger le dossier (PDF)":"Download the report (PDF, in French)","Télécharger le dossier en français (PDF)":"Download the report (PDF, French)","Télécharger en turc (PDF)":"Download (PDF, Turkish)","Télécharger le dossier en anglais (PDF)":"Download the report (PDF, English)"};
+const yrEN=p=>p.yr;
+
+
+const FEAT=[
+ {id:"sig-01",k:"70",fr:"bâtiments jugés critiques sur 137 exposés aux crues",en:"buildings rated critical out of 137 exposed to flooding"},
+ {id:"stat-01",k:"74 %",fr:"de l’inertie expliquée par l’ACP · 4 profils de pays",en:"of inertia explained by the PCA · 4 country profiles"},
+ {id:"sig-02",k:"66 %",fr:"du territoire à plus de 40 min d’un hôpital",en:"of the area more than 40 min from a hospital"},
+ {id:"urb-01",k:"13 %",fr:"seulement des communes jugées « vertueuses »",en:"of municipalities only are rated “virtuous”"}];
+function inFilter(p){return filter==="all"||(filter==="feat"?FEAT.some(f=>f.id===p.id):p.cat===filter)}
+function renderFeat(){
+  const el=document.getElementById("feat"); if(!el)return; el.innerHTML="";
+  FEAT.forEach(f=>{const p=P.find(x=>x.id===f.id); if(!p)return;
+    const b=document.createElement("button"); b.type="button"; b.className="fcard"; b.style.setProperty("--c",`var(${CATS[p.cat].c})`);
+    b.innerHTML=`<div class="fimg"><img src="ill/${p.id}.jpg" alt="${F(p,"title")}" width="800" height="600" loading="lazy" decoding="async"></div>
+      <div class="fbody"><div class="fcat">${cl(p.cat)} · ${p.yr}</div><h4>${F(p,"title")}</h4>
+      <div class="fkey"><b>${LANG==="en"?f.k.replace(" %","%"):f.k}</b><span>${LANG==="en"?f.en:f.fr}</span></div></div>`;
+    b.onclick=()=>{location.hash="p-"+p.id}; el.append(b);});
+}
+const grid=document.getElementById("grid"), legend=document.getElementById("legend");
+let filter="all", visible=P.slice();
+
+function chip(key,label,n,cvar){
+  const b=document.createElement("button");
+  b.className="chip";b.type="button";b.dataset.k=key;
+  b.setAttribute("aria-pressed",key===filter?"true":"false");
+  if(cvar)b.style.setProperty("--c",`var(${cvar})`);
+  b.innerHTML=(cvar?'<span class="sw"></span>':'')+`<span>${label}</span><span class="n">${n}</span>`;
+  b.onclick=()=>{filter=key;render()};
+  return b;
+}
+function render(){
+  legend.innerHTML="";
+  legend.append(chip("all",t("all"),P.length));
+  const fc=chip("feat","★ "+t("featChip"),FEAT.length); fc.classList.add("chip-feat"); legend.append(fc);
+  for(const k in CATS) legend.append(chip(k,cl(k),P.filter(p=>p.cat===k).length,CATS[k].c));
+  visible=P.filter(inFilter);
+  grid.innerHTML="";
+  visible.forEach(p=>{
+    const b=document.createElement("button");
+    b.type="button";b.className="card"+"";
+    b.style.setProperty("--c",`var(${CATS[p.cat].c})`);
+    const thumb=`<div class="thumb"><img src="ill/${p.id}.jpg" alt="${F(p,"title")}" width="800" height="600" loading="lazy" decoding="async"><span class="tag">${cl(p.cat)}</span></div>`;
+    b.innerHTML=thumb+`<div class="card-body"><h3>${F(p,"title")}</h3><div class="meta mono"><span>${p.yr}</span></div></div>`;
+    b.onclick=()=>{location.hash="p-"+p.id};
+    grid.append(b);
+  });
+  if(typeof updateMap==="function")updateMap();
+}
+
+const dlg=document.getElementById("dlg");
+let cur=-1;
+function openP(id){
+  const i=P.findIndex(p=>p.id===id); if(i<0)return;
+  cur=i; const p=P[i];
+  dlg.style.setProperty("--c",`var(${CATS[p.cat].c})`);
+  document.getElementById("dlg-code").textContent=cl(p.cat).toUpperCase()+" · "+p.yr;
+  document.getElementById("dlg-title").textContent=F(p,"title");
+  document.getElementById("dlg-desc").textContent=F(p,"desc");
+  document.getElementById("dlg-pb").textContent=F(p,"pb");
+  dlg.querySelector(".pb").hidden=!F(p,"pb");
+  const li=a=>a.map(x=>`<li>${x}</li>`).join("");
+  document.getElementById("dlg-obj").innerHTML=li(F(p,"obj"));
+  document.getElementById("dlg-res").innerHTML=li(F(p,"res"));
+  document.getElementById("dlg-tools").innerHTML=F(p,"tools").map(t=>`<span class="pill">${t}</span>`).join("");
+  document.getElementById("dlg-facts").innerHTML=[[t("course"),F(p,"course")],[t("where"),F(p,"where")],[t("year"),F(p,"year")]].map(x=>`<dt>${x[0]}</dt><dd>${x[1]}</dd>`).join("");
+  document.getElementById("dlg-actions").innerHTML=p.links.map((l,j)=>`<a class="btn ${j?"ghost":"primary"} dl-btn" href="${l[1]}" target="_blank" rel="noopener" download>${LANG==="en"?(LINK_EN[l[0]]||l[0]):l[0]} ↓</a>`).join("");
+  dlg.querySelector(".sheet").scrollTop=0;
+  if(!dlg.open)dlg.showModal();
+}
+function step(d){const L=visible.length?visible:P;let k=L.findIndex(x=>x.id===P[cur].id);k=(k+d+L.length)%L.length;location.hash="p-"+L[k].id}
+document.getElementById("prev").onclick=()=>step(-1);
+document.getElementById("next").onclick=()=>step(1);
+function closeDlg(){if(dlg.open)dlg.close()}
+document.getElementById("dlg-close").onclick=closeDlg;
+dlg.addEventListener("click",e=>{if(e.target===dlg)closeDlg()});
+dlg.addEventListener("close",()=>{if(location.hash.startsWith("#p-"))history.replaceState(null,"",location.pathname+location.search+"#projets")});
+dlg.addEventListener("keydown",e=>{if(e.key==="ArrowRight")step(1);if(e.key==="ArrowLeft")step(-1)});
+function route(){const h=location.hash.slice(1); if(h.startsWith("p-"))openP(h.slice(2)); else closeDlg()}
+window.addEventListener("hashchange",route);
+render(); route();
+
+// Menus de contact (e-mail, téléphone) : ouverture, fermeture et copie.
+(function(){
+  const menus=[["mail-toggle","mail-menu"],["phone-toggle","phone-menu"]].map(([t,m])=>[document.getElementById(t),document.getElementById(m)]).filter(x=>x[0]);
+  const set=(t,m,o)=>{m.hidden=!o;t.setAttribute("aria-expanded",String(o))};
+  const closeAll=()=>menus.forEach(([t,m])=>set(t,m,false));
+  menus.forEach(([t,m])=>{
+    t.addEventListener("click",e=>{e.stopPropagation();const open=m.hidden;closeAll();set(t,m,open)});
+    m.querySelectorAll("a").forEach(a=>a.addEventListener("click",closeAll));
+  });
+  document.addEventListener("click",e=>{if(!menus.some(([,m])=>m.contains(e.target)))closeAll()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAll()});
+  const copy=(id,val,label,done)=>{const b=document.getElementById(id);if(!b)return;
+    b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(val);b.textContent=done()}catch(_){b.textContent=val}
+      setTimeout(()=>{b.textContent=label()},2200)})};
+  copy("mail-copy","furkansert89@gmail.com",()=>t("copyMail"),()=>t("copiedMail"));
+  copy("phone-copy","+33 7 44 75 99 22",()=>t("copyPhone"),()=>t("copiedPhone"));
+})();
+
+// Téléchargements (CV et dossiers) : via la capacité « downloads » dans Claude, lien direct ailleurs.
+(function(){
+  if(!window.claude||typeof window.claude.use!=="function")return;
+  let dl=null;
+  window.claude.use("downloads").then(ns=>{dl=ns}).catch(()=>{});
+  document.addEventListener("click",async e=>{
+    const a=e.target.closest(".cv-btn,.dl-btn"); if(!a||!dl)return;
+    e.preventDefault();
+    const href=a.getAttribute("href"), name=href.split("/").pop();
+    try{const res=await fetch(href);const blob=await res.blob();await dl.save({filename:name,data:blob})}
+    catch(err){if(err&&err.code&&err.code!=="declined")console.warn("download",err.code)}
+  });
+})();
+
+
+// Carte interactive des projets (Leaflet, chargée à l’approche de la section)
+const LOC={"sig-01":[47.902,1.909],"stage-01":[50.633,3.06],"sig-02":[-41.30,147.55],"urb-01":[45.15,0.72],"stage-02":[41.05,28.95],
+ "sig-03":[46.687,-1.049],"sig-04":[46.670,-1.426],"carto-01":[39.5,-98.35],"carto-02":[22.5,79.0],"diag-01":[48.888,2.317],"terr-01":[-19.6,47.0],
+ "stat-02":[46.6,2.4,1],"diag-02":[48.826,2.362],"stage-03":[36.19,44.01],"stat-03":[50.0,10.0,1],"urb-02":[46.307,4.832],"urb-03":[48.404,2.70]};
+const VIEWS={world:[[-48,-125],[66,155]],europe:[[36,-11],[61,40]],france:[[42.2,-5.2],[51.2,8.3]],paris:[[48.80,2.22],[48.925,2.47]]};
+var PMAP=null, PMK={};
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function tipHTML(p){return `<small>${cl(p.cat)} · ${p.yr}</small>${F(p,"title")}`}
+function updateMap(){
+  if(!PMAP)return;
+  P.forEach(p=>{const m=PMK[p.id];if(!m)return;
+    const show=inFilter(p);
+    if(show&&!PMAP.hasLayer(m))m.addTo(PMAP); if(!show&&PMAP.hasLayer(m))PMAP.removeLayer(m);
+    m.setTooltipContent(tipHTML(p));});
+}
+function setView(v){
+  if(!PMAP)return; PMAP.fitBounds(VIEWS[v],{animate:true});
+  document.querySelectorAll(".pmap-ctl button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
+}
+function initMap(world){
+  const el=document.getElementById("pmap");
+  PMAP=L.map(el,{scrollWheelZoom:false,zoomSnap:.25,minZoom:1,maxZoom:11,worldCopyJump:false,maxBounds:[[-75,-200],[85,220]],attributionControl:true});
+  PMAP.attributionControl.setPrefix(false).addAttribution("Fond : Natural Earth");
+  PMAP.createPane("base").style.zIndex=300; PMAP.createPane("lines").style.zIndex=350;
+  L.geoJSON(world,{pane:"base",style:{fillColor:"#e3e6e2",fillOpacity:1,color:"#ffffff",weight:.7},interactive:false}).addTo(PMAP);
+  fetch("fr.json").then(r=>r.json()).then(fr=>{
+    const dep=L.geoJSON(fr,{pane:"lines",style:{color:"#ffffff",weight:.9,opacity:1,fill:false},interactive:false});
+    const sync=()=>{const z=PMAP.getZoom();if(z>=4.5&&!PMAP.hasLayer(dep))dep.addTo(PMAP);if(z<4.5&&PMAP.hasLayer(dep))PMAP.removeLayer(dep)};
+    PMAP.on("zoomend",sync);sync();}).catch(()=>{});
+  fetch("paris.json").then(r=>r.json()).then(pj=>{
+    const st={a:{color:"#9aa5a1",weight:1},c:{color:"#ffffff",weight:1},s:{color:"#7fb0cf",weight:3}};
+    const lay=L.geoJSON(pj,{pane:"lines",style:f=>Object.assign({fill:false,opacity:1},st[f.properties.k]),interactive:false});
+    const sync=()=>{const z=PMAP.getZoom();if(z>=9&&!PMAP.hasLayer(lay))lay.addTo(PMAP);if(z<9&&PMAP.hasLayer(lay))PMAP.removeLayer(lay)};
+    PMAP.on("zoomend",sync);sync();}).catch(()=>{});
+  P.forEach(p=>{const c=LOC[p.id];if(!c)return;const col=cssVar(CATS[p.cat].c);
+    const m=c[2]?L.circleMarker([c[0],c[1]],{radius:13,color:col,weight:2,dashArray:"4 3",fillColor:col,fillOpacity:.18})
+                :L.circleMarker([c[0],c[1]],{radius:7.5,color:"#fff",weight:2,fillColor:col,fillOpacity:1});
+    m.bindTooltip(tipHTML(p),{className:"ptip",direction:"top",offset:[0,-8]});
+    m.on("click",()=>{location.hash="p-"+p.id});
+    m.on("mouseover",()=>m.setStyle({radius:c[2]?15:10})); m.on("mouseout",()=>m.setStyle({radius:c[2]?13:7.5}));
+    PMK[p.id]=m;});
+  setView("world"); updateMap();
+  document.querySelectorAll(".pmap-ctl button").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.v)));
+}
+(function(){
+  const el=document.getElementById("pmap"); if(!el)return;
+  let started=false;
+  const start=()=>{ if(started)return; started=true;
+    const sc=document.createElement("script"); sc.src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js";
+    sc.onload=()=>fetch("world.json").then(r=>r.json()).then(initMap).catch(()=>{el.parentElement.style.display="none"});
+    sc.onerror=()=>{el.parentElement.style.display="none"};
+    document.head.appendChild(sc);};
+  if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){io.disconnect();start()}},{rootMargin:"400px"});io.observe(el)}
+  else start();
+})();
+
+// Langue : FR / EN
+(function(){
+  const fr={};document.querySelectorAll("[data-i18n]").forEach(el=>{fr[el.dataset.i18n]=el.textContent});
+  Object.assign(I18N.fr,Object.fromEntries(Object.entries(fr).filter(([k])=>!(k in I18N.fr))));
+  window.setLang=function(l){
+    LANG=l;document.documentElement.lang=l;
+    try{localStorage.setItem("lang",l)}catch(_){}
+    document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=t(el.dataset.i18n)});
+    document.querySelectorAll(".lang-switch button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.set===l)));
+    render(); if(dlg.open&&cur>=0)openP(P[cur].id);
+  };
+  document.querySelectorAll(".lang-switch button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.set)));
+  setLang(LANG);
+})();
+</script>
+</body>
+</html>
