@@ -64,7 +64,9 @@ h1,h2,h3{font-family:var(--display);font-stretch:112%;line-height:1.05;text-wrap
 @media (max-width:640px){.nav ul{gap:14px}.nav ul li.hide-sm{display:none}}
 
 /* hero */
-.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero{position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(to bottom,rgba(238,240,238,0),var(--paper));pointer-events:none}
+.hero>.wrap{z-index:1}
 .hero-bg{position:absolute;inset:0;background:url(img/hero.jpg) center/cover;opacity:.55}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 30%,color-mix(in srgb,var(--paper) 40%,transparent) 75%,transparent)}
 .hero .wrap{position:relative;padding-top:72px;padding-bottom:56px;display:grid;gap:22px}
@@ -844,7 +846,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .fcard .fkey span{font-size:13.5px;color:var(--muted);line-height:1.35}
 .star{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:#b5741f;font:600 11px var(--mono);letter-spacing:.05em;padding:4px 7px;border-radius:4px}
 /* cv */
-.cv-sec{background:var(--surface);border-top:1px solid var(--line)}
+.cv-sec{background:linear-gradient(to bottom,var(--paper) 0,var(--surface) 160px,var(--surface) calc(100% - 200px),#e9ecea 100%)}
 .cv{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:56px}
 @media (max-width:900px){.cv{grid-template-columns:1fr;gap:40px}}
 .cv-h{font-family:var(--body);font-stretch:100%;font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 18px;padding-bottom:8px;border-bottom:1px solid var(--line)}
@@ -888,7 +890,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .lang small{color:var(--muted)}
 
 /* contact */
-.contact{background:var(--ink);color:var(--paper)}
+.contact{background:linear-gradient(to bottom,#e9ecea 0,#7f8987 70px,#2b3533 150px,var(--ink) 230px);color:var(--paper);padding-top:150px}
 .contact .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
 @media (max-width:760px){.contact .wrap{grid-template-columns:1fr}}
 .contact h2{font-size:clamp(32px,5vw,54px);font-weight:800}
