@@ -1554,8 +1554,9 @@ function openP(id){
   document.getElementById("dlg-tools").innerHTML=F(p,"tools").map(t=>`<span class="pill">${t}</span>`).join("");
   document.getElementById("dlg-facts").innerHTML=[[t("course"),F(p,"course")],[t("where"),F(p,"where")],[t("year"),F(p,"year")]].map(x=>`<dt>${x[0]}</dt><dd>${x[1]}</dd>`).join("");
   document.getElementById("dlg-actions").innerHTML=p.links.map((l,j)=>`<a class="btn ${j?"ghost":"primary"} dl-btn" href="${l[1]}" target="_blank" rel="noopener" download>${LANG==="en"?(LINK_EN[l[0]]||l[0]):l[0]} ↓</a>`).join("");
-  dlg.querySelector(".sheet").scrollTop=0;
   if(!dlg.open)dlg.showModal();
+  const top=()=>{dlg.scrollTop=0;dlg.querySelectorAll(".sheet,.dlg").forEach(e=>e.scrollTop=0)};
+  top();requestAnimationFrame(top);
 }
 function step(d){const L=visible.length?visible:P;let k=L.findIndex(x=>x.id===P[cur].id);k=(k+d+L.length)%L.length;location.hash="p-"+L[k].id}
 document.getElementById("prev").onclick=()=>step(-1);
